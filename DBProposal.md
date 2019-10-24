@@ -1,11 +1,9 @@
-# The Best ToDo List in the World
+# Database Proposal
 
-* Phil Barresi
-* Jacqueline Sharpe
-* Francis Underwood
-* Heather Dunbar
-* Douglas Stamper
-* Seth Grayson
+* Daniel Collins
+* Varun Pilly
+* Jonathan Alcantara
+* Shaopeng Ge 
 
 ## Users
 
@@ -16,8 +14,8 @@ The user collection will store all users and their profiles. Users will be able 
     "_id":"7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "hashedPassword":"$2a$08$XdvNkfdNIL8Fq7l8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
     "profile":{
-        "name":"Francis Underwood",
-        "friends": ["7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
+        "name":"Daniel Collins",
+        "friends": ["4b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "3b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
         "favoriteArtists" : ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "7b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
         "concertsAttended" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
         "concertsToAttend" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
@@ -38,11 +36,11 @@ This subdocument is used to describe the user's profile.
 
 ```
 {
-    "name":"Francis Underwood",
-    "friends": ["7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
-    "favoriteArtists" : ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "7b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
-    "concertsAttended" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
-    "concertsToAttend" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
+    "name":"Varun Pilly",
+    "friends": ["7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "2b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
+    "favoriteArtists" : ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "8b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
+    "concertsAttended" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "6b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+    "concertsToAttend" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "5b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
     "_id":"c5d0fd67-7977-4fc5-9088-33d0347c932b"
 }
 ```
