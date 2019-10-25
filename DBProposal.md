@@ -141,7 +141,7 @@ The Concerts collection will store all the Concerts.
         "venue": "Lincoln Center for the Performing Arts"
         "type": ["rock", "hip-hop"],
         "description":"American best rock con!",
-        "ticketPrice": 80
+        "ticketPrice": 80.00
     }
 }
 ```
