@@ -54,6 +54,7 @@ This subdocument is used to describe the user's profile.
 | concertsToAttend | list of strings | List of strings of concert IDs that the user will attend |
 | _id  | string | A globally unique identifier to represent the user |
 
+
 ## Artists
 
 The artist collection will store all artists and their details. Users will be able to view an artist's upcoming concerts, their music website to view songs, and see similar artists. Users will also be able to leave comments on the artist's page and favorite an artist to see all thier future concerts.
@@ -122,3 +123,60 @@ This subdocument is used to hold comments made about the artist.
 | _id  | string | A globally unique identifier to represent the comment | 
 | user | string | The user who made the comment. | 
 | comment | string | the text body of the comment |
+
+## Concerts
+
+The Concerts collection will store all the Concerts. 
+
+```
+{
+    "_id":"5a5c4431-cdc9-4144-8429-fcb278c5c122",
+    "info": {
+        "title":"Rock Time",
+        "artists":[1b7997a2-c0d2-4f8c-b27a-6a124b5b6, 1b7997a2-c0d2-4f823323-27a-6a124b5b6, 1b7997a2-c0d2-4fsadasd323-27a-6a124b5b6],
+        "date": "11/1/2019",
+        "Time": "20:00",
+        "address": "Lincoln Center Plaza, New York, NY 10023",
+        "zipcode": "10023",
+        "vanue": "Lincoln Center for the Performing Arts"
+        "type": ["rock", "hip-hop"],
+        "description":"American best rock con!",
+        "ticketPrice": 80
+    }
+}
+```
+| Name | Type | Description |
+|------|------|-------------|
+| _id  | string | A globally unique identifier to represent the concert |
+| info | Concert Info | The concert's information |
+
+## Concert Info (subdocument; not stored in a collection)
+
+This subdocument is used to describe the concert's information.
+
+```
+{
+    "title":"Rock Time",
+    "artists":[1b7997a2-c0d2-4f8c-b27a-6a124b5b6, 1b7997a2-c0d2-4f823323-27a-6a124b5b6, 1b7997a2-c0d2-4fsadasd323-27a-6a124b5b6],
+    "date": "11/1/2019",
+    "Time": "20:00",
+    "address": "Lincoln Center Plaza, New York, NY 10023",
+    "zipcode": "10023",
+    "vanue": "Lincoln Center for the Performing Arts"
+    "type": ["rock", "hip-hop"],
+    "description":"American best rock con!",
+    "ticketPrice": 80
+}
+```
+| Name | Type | Description |
+|------|------|-------------|
+| title | string | The task ID. | 
+| artists | artists array | An array of artists' IDs of the concert. |
+| date | string | The date of the concert. |
+| time | string | The time of the concert. |
+| address | string | The location of the concert. |
+| zipcode | string | The zipcode of the concert. | 
+| vanue | string | The vanue of the concert. |
+| type | types array | The music typys of concert. |
+| description | string | A longer description of the concert. |
+| ticketPrice | number | The price of the concert. | 
