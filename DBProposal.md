@@ -54,3 +54,71 @@ This subdocument is used to describe the user's profile.
 | concertsToAttend | list of strings | List of strings of concert IDs that the user will attend |
 | _id  | string | A globally unique identifier to represent the user |
 
+## Artists
+
+The artist collection will store all artists and their details. Users will be able to view an artist's upcoming concerts, their music website to view songs, and see similar artists. Users will also be able to leave comments on the artist's page and favorite an artist to see all thier future concerts.
+
+```
+{
+    "_id":"7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "details":{
+        "name":"Jonathan Alcantara",
+        "genre": "Hip Hop",
+        "concertsPerformed" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+        "concertsToPerform" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"]
+    },
+    "comments":[{
+        "_id":"",
+        "user":"",
+        "comment":""},
+        {next comment}, ...]
+}
+```
+
+| Name | Type | Description |
+|------|------|-------------|
+| _id  | string | A globally unique identifier to represent the artist |
+| details | Artist Details | The artist's details | 
+| comments | User Comments | List of comments on the artist left by users | 
+
+## Artist Details (subdocument; not stored in a collection)
+
+This subdocument is used to describe the artist's details.
+
+```
+{
+     "name":"Jonathan Alcantara",
+     "genre": "Hip Hop",
+     "concertsPerformed" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+     "concertsToPerform" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"]
+}
+```
+
+| Name | Type | Description |
+|------|------|-------------|
+| name | string | The artist's name. | 
+| genre | string | The artist's genre of music. | 
+| concertsAttended | list of strings | List of strings of concert IDs that the artist has performed at |
+| concertsToAttend | list of strings | List of strings of concert IDs that the artist will perform at |
+
+## Artist Comments (subdocument; not stored in a collection)
+
+This subdocument is used to hold comments made about the artist.
+
+```
+[
+    {
+        "_id":"",
+        "user":"",
+        "comment":""
+    },
+    {next comment}, 
+    ...
+]
+```
+
+| Name | Type | Description |
+|------|------|-------------|
+| _id  | string | A globally unique identifier to represent the comment | 
+| user | string | The user who made the comment. | 
+| comment | string | the text body of the comment |
