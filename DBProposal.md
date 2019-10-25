@@ -163,7 +163,7 @@ This subdocument is used to describe the concert's information.
     "address": "Lincoln Center Plaza, New York, NY 10023",
     "zipcode": "10023",
     "venue": "Lincoln Center for the Performing Arts"
-    "type": ["rock", "hip-hop"],
+    "genre": ["rock", "hip-hop"],
     "description":"American best rock con!",
     "ticketPrice": 80.00
 }
@@ -177,6 +177,6 @@ This subdocument is used to describe the concert's information.
 | address | string | The location of the concert |
 | zipcode | string | The zipcode of the concert | 
 | venue | string | The venue of the concert |
-| type | types array | The music typys of concert |
+| genre | genre array | The genre of concert |
 | description | string | A longer description of the concert |
 | ticketPrice | number | The price of the concert in usd | 
