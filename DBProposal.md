@@ -104,7 +104,7 @@ This subdocument is used to describe the concert's information.
 | title | string | The task ID. | 
 | artists | artists array | An array of artists' IDs of the concert. |
 | date | string | The date of the concert. |
-| time | string | The date of the concert. |
+| time | string | The time of the concert. |
 | address | string | The location of the concert. |
 | zipcode | string | The zipcode of the concert. | 
 | vanue | string | The vanue of the concert. |
