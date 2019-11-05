@@ -249,5 +249,8 @@ module.exports = {
     addFavArtist,
     addConcAttend,
     addConcToAttend,
-    removeFriend
+    removeFriend,
+    removeFavArtist,
+    removeConcAttend,
+    removeConcToAttend
 };
