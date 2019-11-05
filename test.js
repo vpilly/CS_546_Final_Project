@@ -13,6 +13,9 @@ async function main() {
 
     await users.addUser("Shaopeng", "Ge", "pass");
 
+    console.log(await users.addFriend(String(user1._id), String(user2._id)));
+    console.log(await users.removeFriend(String(user1._id), String(user2._id)));
+
     console.log(await users.getAllUsers());
     console.log();
 
@@ -27,7 +30,7 @@ async function main() {
     console.log(await users.getAllUsers());
 }
 
-// Not quite sure if this is the correct way to do things
+// Not quite sure if this is the correct way to do promises
 main().catch(function (error) {
     console.error(error);
 }).then(async function () {
