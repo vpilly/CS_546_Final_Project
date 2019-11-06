@@ -4,10 +4,11 @@ const { ObjectId } = require('mongodb');
 
 // Basic Mongo Functions
 
-async function addUser(firstName, lastName, password) {
-    if (arguments.length !== 3) throw `Error: function addUser() expected 3 parameters but instead received ${arguments.length}`;
+async function addUser(firstName, lastName, email, password) {
+    if (arguments.length !== 4) throw `Error: function addUser() expected 4 parameters but instead received ${arguments.length}`;
     if (typeof (firstName) !== 'string') throw `Error: function addUser() expected firstName to be a string but instead recieved a ${typeof (firstName)}`;
     if (typeof (lastName) !== 'string') throw `Error: function addUser() expected lastName to be a string but instead recieved a ${typeof (lastName)}`;
+    if (typeof (email) !== 'string') throw `Error: function addUser() expected email to be a string but instead recieved a ${typeof (lastName)}`;
     if (typeof (password) !== 'string') throw `Error: function addUser() expected password to be a string but instead recieved a ${typeof (password)}`;
 
     // Encrypt Password Maybe
@@ -22,6 +23,7 @@ async function addUser(firstName, lastName, password) {
     }
 
     insert = {
+        email: email,
         hashedPassword: password,
         profile: baseProfile
     }
