@@ -11,8 +11,6 @@ async function addUser(firstName, lastName, email, password) {
     if (typeof (email) !== 'string') throw `Error: function addUser() expected email to be a string but instead recieved a ${typeof (lastName)}`;
     if (typeof (password) !== 'string') throw `Error: function addUser() expected password to be a string but instead recieved a ${typeof (password)}`;
 
-    // Encrypt Password Maybe
-
     baseProfile = {
         name: firstName + ' ' + lastName,
         friends: [],
@@ -45,6 +43,17 @@ async function getUser(userId) {
     const usersCollection = await users();
     const user = await usersCollection.findOne({ _id: objId });
     if (user === null) throw `Error: function getUser() could not find a user with the userId: ${userId}`;
+
+    return user;
+}
+
+async function getUserByEmail(email) {
+    if (arguments.length !== 1) throw `Error: function getUserByEmail() expected 1 parameter but instead received ${arguments.length}`;
+    if (typeof (email) !== 'string') throw `Error: function getUserByEmail() expected email to be a string but instead recieved a ${typeof (email)}`;
+
+    const usersCollection = await users();
+    const user = await usersCollection.findOne({ "email": email });
+    if (user === null) throw `Error: function getUserByEmail() could not find a user with the email: ${email}`;
 
     return user;
 }
@@ -244,6 +253,7 @@ async function removeConcToAttend(userId, concertId) {
 module.exports = {
     addUser,
     getUser,
+    getUserByEmail,
     getAllUsers,
     removeUser,
     renameUser,

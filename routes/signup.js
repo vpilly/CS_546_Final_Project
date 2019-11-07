@@ -1,5 +1,7 @@
+const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
+const saltRounds = 10;
 const userData = require('../data/users');
 
 router.get('/', async (req, res) => {
@@ -16,9 +18,10 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        console.log(await userData.addUser(formData.firstName, formData.lastName, formData.email, formData.password));
-        // res.render('home', { title: 'SignedUp' });
-        res.redirect('/');
+        bcrypt.hash(formData.password, saltRounds, async function (err, hash) {
+            await userData.addUser(formData.firstName, formData.lastName, formData.email, hash);
+            res.redirect('/');
+        });
     } catch (e) {
         res.status(500).json({ error: e });
     }
