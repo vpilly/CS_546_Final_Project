@@ -16,15 +16,18 @@ router.post('/', async (req, res) => {
         return;
     }
 
-    try {
-        const user = await userData.getUserByEmail(formData.email);
-        bcrypt.compare(formData.password, user.hashedPassword, function (err, res) {
-            if (!res) {
-                return response.status(400).send({ message: "The password is invalid" });
-            }
-        });
+    formData.email = formData.email.toLowerCase();
 
-        res.send({ message: "The username and password combination is correct!" });
+    try {
+        let confirm = false;
+        const user = await userData.getUserByEmail(formData.email);
+        confirm = await bcrypt.compare(formData.password, user.hashedPassword);
+        if (confirm === true) {
+            res.send({ message: "The username and password combination is correct!" });
+        }
+        else {
+            res.send({ message: "The username and password combination is incorrect." });
+        }
     } catch (e) {
         res.status(500).json({ error: e });
     }
