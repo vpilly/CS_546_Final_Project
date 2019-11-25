@@ -70,7 +70,7 @@ The artist collection will store all artists and their details. Users will be ab
     },
     "comments":[{
         "_id": "907997a2-c0d2-4f8c-b27a-6a124b5b6310",
-        "user": "vpilly",
+        "user": "2b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310",
         "comment": "I really liked the music"},
         {next comment}, ...]
 }
@@ -110,7 +110,7 @@ This subdocument is used to hold comments made about the artist.
 [
     {
         "_id": "4a7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-        "user": "Test",
+        "user": "2b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310",
         "comment": "Not a huge fan"
     },
     {next comment}, 
@@ -121,7 +121,7 @@ This subdocument is used to hold comments made about the artist.
 | Name | Type | Description |
 |------|------|-------------|
 | _id  | string | A globally unique identifier to represent the comment | 
-| user | string | The user who made the comment | 
+| user | string | The id of the user who made the comment | 
 | comment | string | the text body of the comment |
 
 ## Concerts
