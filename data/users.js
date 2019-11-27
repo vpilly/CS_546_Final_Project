@@ -29,7 +29,7 @@ async function addUser(firstName, lastName, email, password) {
     const usersCollection = await users();
     const insertInfo = await usersCollection.insertOne(insert);
 
-    if (insertInfo.insertedCount === 0) throw `could not insert user ${firstName + ' ' + lastName}  into database`;
+    if (insertInfo.insertedCount === 0) throw `Error: could not insert user ${firstName + ' ' + lastName} into database`;
 
     return insert;
 }
