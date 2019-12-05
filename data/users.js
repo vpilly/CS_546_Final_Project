@@ -53,7 +53,7 @@ async function getUserByEmail(email) {
 
     const usersCollection = await users();
     const user = await usersCollection.findOne({ "email": email });
-    if (user === null) throw `Error: function getUserByEmail() could not find a user with the email: ${email}`;
+    // if (user === null) throw `Error: function getUserByEmail() could not find a user with the email: ${email}`;
 
     return user;
 }

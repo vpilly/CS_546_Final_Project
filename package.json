@@ -18,10 +18,11 @@
   },
   "homepage": "https://github.com/vpilly/CS_546_Final_Project#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^3.0.7",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
-    "handlebars": "^4.5.1",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.5.3",
     "mongodb": "^3.3.3",
     "uuid": "^3.3.3"
   }

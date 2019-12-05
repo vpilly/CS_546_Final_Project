@@ -2,6 +2,7 @@ var bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const userData = require('../data/users');
+const secMap = require('../security/table');
 
 router.get('/', async (req, res) => {
     res.render('login', { title: 'Login' });
@@ -21,13 +22,18 @@ router.post('/', async (req, res) => {
     try {
         let confirm = false;
         const user = await userData.getUserByEmail(formData.email);
-        confirm = await bcrypt.compare(formData.password, user.hashedPassword);
-        if (confirm === true) {
-            res.send({ message: "The username and password combination is correct!" });
+        if (user) {
+            confirm = await bcrypt.compare(formData.password, user.hashedPassword);
+            if (confirm === true) {
+                req.session.auth = {
+                    email: user.email,
+                    secret: await secMap.newCookie(user.email)
+                };
+                res.redirect('/home');
+                return;
+            }
         }
-        else {
-            res.send({ message: "The username and password combination is incorrect." });
-        }
+        res.send({ message: "The username and password combination is incorrect." });
     } catch (e) {
         res.status(500).json({ error: e });
     }
