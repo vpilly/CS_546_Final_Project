@@ -56,8 +56,8 @@ router.post('/', async (req, res) => {
         const hash = await bcrypt.hash(formData.password, saltRounds);
         await userData.addUser(formData.firstName, formData.lastName, formData.email, hash);
         req.session.auth = {
-            email: formData.email//,
-            // secret: secMap.newCookie(user.email)
+            email: formData.email,
+            secret: await secMap.newCookie(user.email)
         };
         res.redirect('/');
     } catch (e) {
