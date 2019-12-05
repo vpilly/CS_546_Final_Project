@@ -11,15 +11,15 @@ The user collection will store all users and their profiles. Users will be able 
 
 ```
 {
-    "_id":"7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "hashedPassword":"$2a$08$XdvNkfdNIL8Fq7l8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
-    "profile":{
-        "name":"Daniel Collins",
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "hashedPassword": "$2a$08$XdvNkfdNIL8Fq7l8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
+    "profile": {
+        "name": "Daniel Collins",
         "friends": ["4b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "3b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
-        "favoriteArtists" : ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "7b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
-        "concertsAttended" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
-        "concertsToAttend" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
-        "_id":"c5d0fd67-7977-4fc5-9088-33d0347c932b"
+        "favoriteArtists": ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "7b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
+        "concertsAttended": ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+        "concertsToAttend": ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
+        "_id": "c5d0fd67-7977-4fc5-9088-33d0347c932b"
     }
 }
 ```
@@ -36,12 +36,12 @@ This subdocument is used to describe the user's profile.
 
 ```
 {
-    "name":"Varun Pilly",
+    "name": "Varun Pilly",
     "friends": ["7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "2b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
-    "favoriteArtists" : ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "8b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
-    "concertsAttended" : ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "6b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
-    "concertsToAttend" : ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "5b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
-    "_id":"c5d0fd67-7977-4fc5-9088-33d0347c932b"
+    "favoriteArtists": ["0b7997a2-c0d2-4f8c-b27a-6a1d425b6310", "8b7937a2-c0d2-2f8c-b27a-6a4d3b5b6310"],
+    "concertsAttended": ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "6b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+    "concertsToAttend": ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "5b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"],
+    "_id": "d5d0fd67-7977-4fc5-9088-33d0347c932b"
 }
 ```
 
@@ -55,24 +55,96 @@ This subdocument is used to describe the user's profile.
 | _id  | string | A globally unique identifier to represent the user |
 
 
+## Artists
+
+The artist collection will store all artists and their details. Users will be able to view an artist's upcoming concerts, their music website to view songs, and see similar artists. Users will also be able to leave comments on the artist's page and favorite an artist to see all thier future concerts.
+
+```
+{
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "details": {
+        "name": "Jonathan Alcantara",
+        "genre": "Hip Hop",
+        "concertsPerformed": ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+        "concertsToPerform": ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"]
+    },
+    "comments":[{
+        "_id": "907997a2-c0d2-4f8c-b27a-6a124b5b6310",
+        "user": "2b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310",
+        "comment": "I really liked the music",
+        "time": "UTC String"},
+        {next comment}, ...]
+}
+```
+
+| Name | Type | Description |
+|------|------|-------------|
+| _id  | string | A globally unique identifier to represent the artist |
+| details | Artist Details | The artist's details | 
+| comments | User Comments | List of comments on the artist left by users | 
+
+## Artist Details (subdocument; not stored in a collection)
+
+This subdocument is used to describe the artist's details.
+
+```
+{
+     "name": "Jonathan Alcantara",
+     "genre": "Hip Hop",
+     "concertsPerformed": ["1b7997a2-c0d2-4f8c-b27a-6a124b5b6310", "7b7937a2-c0d2-2f8c-b27a-624d4b5b6310"],
+     "concertsToPerform": ["3b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310", "7b7237a2-c0d2-2f8c-b27a-6a4d4b5b6310"]
+}
+```
+
+| Name | Type | Description |
+|------|------|-------------|
+| name | string | The artist's name. | 
+| genre | string | The artist's genre of music. | 
+| concertsAttended | list of strings | List of strings of concert IDs that the artist has performed at |
+| concertsToAttend | list of strings | List of strings of concert IDs that the artist will perform at |
+
+## Artist Comments (subdocument; not stored in a collection)
+
+This subdocument is used to hold comments made about the artist.
+
+```
+[
+    {
+        "_id": "4a7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+        "user": "2b7937a2-c0d2-2f8c-b27a-6a4d4b5b6310",
+        "comment": "Not a huge fan",
+        "time": "UTC String",
+    },
+    {next comment}, 
+    ...
+]
+```
+
+| Name | Type | Description |
+|------|------|-------------|
+| _id  | string | A globally unique identifier to represent the comment | 
+| user | string | The id of the user who made the comment | 
+| comment | string | the text body of the comment |
+| time | string | the time when the comment was made |
+
 ## Concerts
 
 The Concerts collection will store all the Concerts. 
 
 ```
 {
-    "_id":"5a5c4431-cdc9-4144-8429-fcb278c5c122",
+    "_id": "5a5c4431-cdc9-4144-8429-fcb278c5c122",
     "info": {
-        "title":"Rock Time",
-        "artists":[1b7997a2-c0d2-4f8c-b27a-6a124b5b6, 1b7997a2-c0d2-4f823323-27a-6a124b5b6, 1b7997a2-c0d2-4fsadasd323-27a-6a124b5b6],
+        "title": "Rock Time",
+        "artists": [1b7997a2-c0d2-4f8c-b27a-6a124b5b6, 1b7997a2-c0d2-4f823323-27a-6a124b5b6, 1b7997a2-c0d2-4fsadasd323-27a-6a124b5b6],
         "date": "11/1/2019",
         "Time": "20:00",
         "address": "Lincoln Center Plaza, New York, NY 10023",
         "zipcode": "10023",
-        "vanue": "Lincoln Center for the Performing Arts"
+        "venue": "Lincoln Center for the Performing Arts"
         "type": ["rock", "hip-hop"],
         "description":"American best rock con!",
-        "ticketPrice": 80
+        "ticketPrice": 80.00
     }
 }
 ```
@@ -93,21 +165,21 @@ This subdocument is used to describe the concert's information.
     "Time": "20:00",
     "address": "Lincoln Center Plaza, New York, NY 10023",
     "zipcode": "10023",
-    "vanue": "Lincoln Center for the Performing Arts"
-    "type": ["rock", "hip-hop"],
+    "venue": "Lincoln Center for the Performing Arts"
+    "genre": ["rock", "hip-hop"],
     "description":"American best rock con!",
-    "ticketPrice": 80
+    "ticketPrice": 80.00
 }
 ```
 | Name | Type | Description |
 |------|------|-------------|
-| title | string | The task ID. | 
-| artists | artists array | An array of artists' IDs of the concert. |
-| date | string | The date of the concert. |
-| time | string | The time of the concert. |
-| address | string | The location of the concert. |
-| zipcode | string | The zipcode of the concert. | 
-| vanue | string | The vanue of the concert. |
-| type | types array | The music typys of concert. |
-| description | string | A longer description of the concert. |
-| ticketPrice | number | The price of the concert. | 
+| title | string | The task ID | 
+| artists | artists array | An array of artists' IDs of the concert |
+| date | string | The date of the concert |
+| time | string | The time of the concert |
+| address | string | The location of the concert |
+| zipcode | string | The zipcode of the concert | 
+| venue | string | The venue of the concert |
+| genre | genre array | The genre of concert |
+| description | string | A longer description of the concert |
+| ticketPrice | number | The price of the concert in usd | 

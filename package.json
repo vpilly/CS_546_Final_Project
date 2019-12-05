@@ -1,0 +1,28 @@
+{
+  "name": "cs_546_final_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpilly/CS_546_Final_Project.git"
+  },
+  "author": "Team 15",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vpilly/CS_546_Final_Project/issues"
+  },
+  "homepage": "https://github.com/vpilly/CS_546_Final_Project#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "handlebars": "^4.5.1",
+    "mongodb": "^3.3.3",
+    "uuid": "^3.3.3"
+  }
+}
