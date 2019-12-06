@@ -5,6 +5,13 @@ const constructorMethod = app => {
     app.use("/signup", signupRoutes);
     app.use("/login", loginRoutes);
 
+    app.use('/', function (req, res, next) {
+        if (!req.session.auth) {
+            res.redirect('/login');
+        }
+        else next();
+    });
+
     app.get("/home", (req, res) => {
         res.render('home', { title: 'Home' });
     });

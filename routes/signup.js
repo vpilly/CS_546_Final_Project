@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const saltRounds = 10;
-const userData = require('../data/users');
+const secMap = require('../security/table');
+const data = require('../data');
+const userData = data.users;
 
 router.get('/', async (req, res) => {
     res.render('signup', { title: 'Signup' });
@@ -35,27 +37,30 @@ router.post('/', async (req, res) => {
     formData.email = formData.email.toLowerCase();
 
     try {
-        await userData.getUserByEmail(formData.email);
-
-        errors.push("Email has already been used before to create an account");
-        res.render('signup', {
-            title: 'Signup',
-            errors: errors,
-            hasErrors: true
-        });
-        return;
-    } catch (e) {
-        const expected = `Error: function getUserByEmail() could not find a user with the email: ${formData.email}`;
-        if (e !== expected) {
-            res.status(500).json({ error: e });
+        const checkEmail = await userData.getUserByEmail(formData.email);
+        if (checkEmail) {
+            errors.push("Email has already been used before to create an account");
+            res.render('signup', {
+                title: 'Signup',
+                errors: errors,
+                hasErrors: true
+            });
             return;
         }
+    } catch (e) {
+        res.status(500).json({ error: e });
+        return;
     }
 
 
     try {
         const hash = await bcrypt.hash(formData.password, saltRounds);
         await userData.addUser(formData.firstName, formData.lastName, formData.email, hash);
+        const sec = await secMap.newCookie(formData.email);
+        req.session.auth = {
+            email: formData.email,
+            secret: sec
+        };
         res.redirect('/');
     } catch (e) {
         res.status(500).json({ error: e });
