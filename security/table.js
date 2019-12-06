@@ -1,6 +1,7 @@
 const authMap = new Map();
 
 async function generateHexString(length) {
+    if (arguments.length !== 1) throw 'Error';
     if (typeof (length) !== 'number') throw 'Error';
 
     // got this from https://stackoverflow.com/questions/5398737/how-can-i-make-a-simple-wep-key-generator-in-javascript
@@ -10,6 +11,8 @@ async function generateHexString(length) {
     }
     return secret.substring(0, length);
 }
+
+// Errors are intentionally left vague
 
 async function newCookie(email) {
     if (arguments.length !== 1) throw 'Error';
