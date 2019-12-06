@@ -2,8 +2,9 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const saltRounds = 10;
-const userData = require('../data/users');
 const secMap = require('../security/table');
+const data = require('../data');
+const userData = data.users;
 
 router.get('/', async (req, res) => {
     res.render('signup', { title: 'Signup' });
@@ -55,9 +56,10 @@ router.post('/', async (req, res) => {
     try {
         const hash = await bcrypt.hash(formData.password, saltRounds);
         await userData.addUser(formData.firstName, formData.lastName, formData.email, hash);
+        const sec = await secMap.newCookie(formData.email);
         req.session.auth = {
             email: formData.email,
-            secret: await secMap.newCookie(user.email)
+            secret: sec
         };
         res.redirect('/');
     } catch (e) {
