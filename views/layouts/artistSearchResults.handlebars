@@ -1,0 +1,14 @@
+<h1>Artists Found</h1>
+<main>
+    {{#if artists.length}}
+    <ul>
+        {{#each artists}}
+            <li><a href="/artists/details/{{this._id}}">{{this.details.name}}</a></li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p class="error">We're sorry, but no results were found for {{artistName}}.</p>
+    {{/if}}
+    <br>
+    <a href="/artists">Make another search</a>
+</main>
