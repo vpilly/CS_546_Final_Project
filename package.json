@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js",
-    "start": "node app.js"
+    "test": "node ./tasks/test.js",
+    "start": "node app.js",
+    "seed": "node ./tasks/seed.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +19,12 @@
   },
   "homepage": "https://github.com/vpilly/CS_546_Final_Project#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^3.0.7",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
-    "handlebars": "^4.5.1",
-    "mongodb": "^3.3.3",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.5.3",
+    "mongodb": "^3.3.5",
     "uuid": "^3.3.3"
   }
 }
