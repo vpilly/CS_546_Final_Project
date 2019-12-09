@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js",
-    "start": "node app.js"
+    "test": "node ./tasks/test.js",
+    "start": "node app.js",
+    "seed": "node ./tasks/seed.js"
   },
   "repository": {
     "type": "git",
