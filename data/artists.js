@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const artists = mongoCollections.artists;
 const users = mongoCollections.users;
+const userData = require('./users');
 const { ObjectId } = require('mongodb');
 
 async function addArtist(name, genre) {
@@ -81,10 +82,10 @@ async function getArtistsByGenre(genre) {
     if (typeof (genre) !== 'string') throw `Error: function artists.getArtistsByGenre() expected genre to be a string but instead recieved a ${typeof (genre)}`;
 
     const artistsCollection = await artists();
-    const artists = await artistsCollection.find({ "details.genre": genre });
-    if (artists === null) throw `Error: function artists.getArtistsByGenre() could not find artists with the genre: ${genre}`;
+    const artistList = await artistsCollection.find({ "details.genre": genre }).toArray();
+    if (artistList === null) throw `Error: function artists.getArtistsByGenre() could not find artists with the genre: ${genre}`;
 
-    return artists;
+    return artistList;
 }
 
 async function getArtistByConcertPerformed(concertId) {
@@ -95,7 +96,7 @@ async function getArtistByConcertPerformed(concertId) {
     if (!ObjectId.isValid(objId)) throw `Error: function artists.getArtistByConcertPerformed() received an invalid concertId: ${concertId}`;
 
     const artistsCollection = await artists();
-    const artists = await artistsCollection.find({ "details.concertsPerformed": objId });
+    const artists = await artistsCollection.find({ "details.concertsPerformed": objId }).toArray();
     if (artists === null) throw `Error: function artists.getArtistByConcertPerformed() could not find artists who have performed at the concert with concertId: ${concertId}`;
 
     return artists;
@@ -109,7 +110,7 @@ async function getArtistByConcertToPerform(concertId) {
     if (!ObjectId.isValid(objId)) throw `Error: function artists.getArtistByConcertToPerform() received an invalid concertId: ${concertId}`;
 
     const artistsCollection = await artists();
-    const artists = await artistsCollection.find({ "details.concertsToPerform": objId });
+    const artists = await artistsCollection.find({ "details.concertsToPerform": objId }).toArray();
     if (artists === null) throw `Error: function artists.getArtistByConcertToPerform() could not find artists who will perform at the concert with concertId: ${concertId}`;
 
     return artists;
@@ -124,6 +125,7 @@ async function removeArtistByID(artistId) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const deletionInfo = await artistsCollection.removeOne({ _id: objId });
 
     if (deletionInfo.deletedCount === 0) throw `Error: function artists.removeArtistByID() could not succesfully remove artist with the artistId: ${artistId}`;
@@ -141,6 +143,7 @@ async function renameArtist(artistId, newName) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $set: { "details.name": newName } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.renameArtist() could not succesfully update name of artist with the artistId: ${artistId}`;
 
@@ -157,6 +160,7 @@ async function addConcertPerformed(artistId, concertId) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $addToSet: { "details.concertsPerformed": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.addConcertPerformed() could not succesfully add concert performed by artist with the artistId: ${artistId}`;
 
@@ -173,6 +177,7 @@ async function removeConcertPerformed(artistId, concertId) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $pull: { "details.concertsPerformed": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.removeConcertPerformed() could not succesfully remove concert performed by artist with the artistId: ${artistId}`;
 
@@ -189,6 +194,7 @@ async function addConcertToPerform(artistId, concertId) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $addToSet: { "details.concertsToPerform": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.addConcertToPerform() could not succesfully add upcoming concert to artist with the artistId: ${artistId}`;
 
@@ -205,6 +211,7 @@ async function removeConcertToPerform(artistId, concertId) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $pull: { "details.concertsToPerform": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.removeConcertToPerform() could not succesfully remove upcoming concert to artist with the artistId: ${artistId}`;
 
@@ -226,6 +233,7 @@ async function addComment(artistId, userId, commentText) {
 
     const artist = await this.getArtistByID(artistId);
 
+    const usersCollection = await users();
     const user = await usersCollection.findOne({ _id: objId2 });
     if (user === null) throw `Error: function artists.addComment() could not find a user with the userId: ${userId}`;
 
@@ -236,13 +244,14 @@ async function addComment(artistId, userId, commentText) {
         time: new Date().toUTCString()
     }
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $addToSet: { "comments": comment } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.addComment() could not succesfully add comment to artist with the artistId: ${artistId}`;
 
     return await artistsCollection.findOne({ _id: objId });
 }
 
-async function removeComment(artistId, commentId) {
+async function removeComment(artistId, userId, commentId) {
     if (arguments.length !== 2) throw `Error: function artists.removeComment() expected 2 parameters but instead received ${arguments.length}`;
     if (typeof (artistId) !== 'string') throw `Error: function artists.removeComment() expected artistId to be a string but instead recieved a ${typeof (artistId)}`;
     if (typeof (commentId) !== 'string') throw `Error: function artists.removeComment() expected commentId to be a string but instead recieved a ${typeof (commentId)}`;
@@ -250,13 +259,23 @@ async function removeComment(artistId, commentId) {
     const objId = ObjectId.createFromHexString(artistId);
     if (!ObjectId.isValid(objId)) throw `Error: function artists.removeComment() received an invalid artistId: ${artistId}`;
 
+    const objId3 = ObjectId.createFromHexString(userId);
+    if (!ObjectId.isValid(objId3)) throw `Error: function artists.removeComment() received an invalid userId: ${userId}`;
+
     const objId2 = ObjectId.createFromHexString(commentId);
     if (!ObjectId.isValid(objId2)) throw `Error: function artists.removeComment() received an invalid commentId: ${commentId}`;
 
+    const user = await userData.getUser(userId);
+    
     const artist = await this.getArtistByID(artistId);
 
+    const artistsCollection = await artists();
     const updateInfo = await artistsCollection.updateOne({ _id: objId }, { $pull: { "comments": { _id: objId2 } } });
     if (updateInfo.modifiedCount === 0) throw `Error: function artists.removeComment() could not succesfully remove upcoming concert to artist with the artistId: ${artistId}`;
+
+    const usersCollection = await users();
+    const updateInfo2 = await usersCollection.updateOne({ _id: objId3 }, { $pull: { "comments": { _id: objId2 } } });
+    if (updateInfo2.modifiedCount === 0) throw `Error: function artists.removeComment() could not succesfully remove upcoming concert to user with the userId: ${userId}`;
 
     return await artistsCollection.findOne({ _id: objId });
 }
