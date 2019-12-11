@@ -10,11 +10,11 @@ const main = async () => {
 
     let i;
     for (i = 0; i < data.length; i++) {
-        var row = data[i];
+        const row = data[i];
         await artists.addArtist(row.name, row.genre);
     }
 
     await db.serverConfig.close();
-  };
-  
-  main().catch(console.log);
+};
+
+main().catch(console.log);

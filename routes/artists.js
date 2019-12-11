@@ -3,17 +3,17 @@ const router = express.Router();
 const artistData = require('../data/artists');
 
 router.get('/', async (req, res) => {
-    res.render("layouts/artistSearch");
+    res.render("artists/artistSearch");
 });
 
 router.get('/details/:id', async (req, res) => {
     try {
         const artist = await artistData.getArtistByID(req.params.id);
-        res.render('layouts/detailedArtist', {artist: artist});
+        res.render('artists/detailedArtist', { artist: artist });
     } catch (e) {
         res
-        .status(500)
-        .json({error: e});
+            .status(500)
+            .json({ error: e });
     }
 });
 
@@ -24,30 +24,30 @@ router.post('/', async (req, res) => {
     if (!artData.artistName || artData.artistName.length === 0) {
         errors.push('No artist name provided');
     }
-    
-    if (typeof(artData.artistName) != "string") {
+
+    if (typeof (artData.artistName) != "string") {
         errors.push('Input provided is of invalid type, must be a string.');
     }
-    
+
     if (errors.length > 0) {
         res
-        .status(400)
-        .render('layouts/artistSearch', {
-            errors: errors,
-            hasErrors: true,
-            artistData: artData
-        });
+            .status(400)
+            .render('artists/artistSearch', {
+                errors: errors,
+                hasErrors: true,
+                artistData: artData
+            });
         return;
     }
 
     try {
         const artists = await artistData.searchArtists(artData.artistName);
-        res.render("layouts/artistSearchResults", {
+        res.render("artists/artistSearchResults", {
             artists: artists,
             artistName: artData.artistName
         });
     } catch (e) {
-        res.status(500).json({error: e});
+        res.status(500).json({ error: e });
     }
 });
 

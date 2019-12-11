@@ -8,7 +8,7 @@ async function addArtist(name, genre) {
     if (arguments.length !== 2) throw `Error: function artists.addArtist() expected 2 parameters but instead received ${arguments.length}`;
     if (typeof (name) !== 'string') throw `Error: function artists.addArtist() expected name to be a string but instead recieved a ${typeof (name)}`;
     if (typeof (genre) !== 'string') throw `Error: function artists.addArtist() expected genre to be a string but instead recieved a ${typeof (genre)}`;
-    
+
     details = {
         name: name,
         genre: genre,
@@ -57,9 +57,9 @@ async function searchArtists(searchstring) {
         throw `The search string was not defined.`;
     }
 
-    if (typeof(searchstring) != "string") {
+    if (typeof (searchstring) != "string") {
         throw `The given search string is not a number.`;
-    } 
+    }
 
     var artists = [];
     let search = searchstring.toLowerCase();
@@ -266,7 +266,7 @@ async function removeComment(artistId, userId, commentId) {
     if (!ObjectId.isValid(objId2)) throw `Error: function artists.removeComment() received an invalid commentId: ${commentId}`;
 
     const user = await userData.getUser(userId);
-    
+
     const artist = await this.getArtistByID(artistId);
 
     const artistsCollection = await artists();
