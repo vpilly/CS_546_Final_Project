@@ -7,7 +7,7 @@ const data = require('../data');
 const userData = data.users;
 
 router.get('/', async (req, res) => {
-    res.render('signup', { title: 'Signup' });
+    res.render('login/signup', { title: 'Signup' });
 });
 
 router.post('/', async (req, res) => {

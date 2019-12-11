@@ -6,7 +6,7 @@ const data = require('../data');
 const userData = data.users;
 
 router.get('/', async (req, res) => {
-    res.render('login', { title: 'Login' });
+    res.render('login/login', { title: 'Login' });
 });
 
 router.post('/', async (req, res) => {
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
                     email: user.email,
                     secret: sec
                 };
-                res.redirect('/home');
+                res.redirect('/');
                 return;
             }
         }
