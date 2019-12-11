@@ -3,9 +3,6 @@ const concerts = mongoCollections.concerts;
 const artists = mongoCollections.artists;
 const { ObjectId } = require('mongodb');
 
-function getToday(){
-    
-}
 async function addConcert(title, artists, date, time, address, zipcode, venue, genre, description, ticketPrice) {
     if (arguments.length !== 10) throw `Error: function addConcert() expected 10 parameters but instead received ${arguments.length}`;
     if (typeof (title) !== 'string') throw `Error: function addConcert() expected title to be a string but instead recieved a ${typeof (firstName)}`;
@@ -84,6 +81,24 @@ async function getRecommendConcerts(){
     return await concertsCollection.find({ 'concertInfo.date': { $gte: today } }).toArray();
 }
 
+async function getConcertByTitle(title){
+    if (arguments.length !== 1) throw `Error: function getConcertByTitle() expected 1 parameter but instead received ${arguments.length}`;
+    if (typeof (title) !== 'string') throw `Error: function getConcertByTitle() expected title to be a string but instead recieved a ${typeof (title)}`;
+
+    let concertsList = [];
+    let search = title.toLowerCase();
+
+    const allConcerts = await this.getAllConcerts();
+
+    for(concert in allConcerts){
+        if(concert.concertInfo.title.toLowerCase().includes(search)){
+            concertsList.push(concert);
+        }
+    }
+
+    return concertsList;
+}
+
 async function getConcertByArtistName(artistName){
     if (arguments.length !== 1) throw `Error: function getConcertByArtistName() expected 1 parameter but instead received ${arguments.length}`;
     if (typeof (artistName) !== 'string') throw `Error: function getConcertByArtistName() expected artistName to be a string but instead recieved a ${typeof (artistName)}`;
@@ -109,17 +124,17 @@ async function getConcertByArtistName(artistName){
     return concertsList
 }
 
-async function getConcertByLocation(location){
-    if (arguments.length !== 1) throw `Error: function getConcertByLocation() expected 1 parameter but instead received ${arguments.length}`;
-    if (typeof (location) !== 'string') throw `Error: function getConcertByLocation() expected location to be a string but instead recieved a ${typeof (location)}`;
+async function getConcertByAddress(address){
+    if (arguments.length !== 1) throw `Error: function getConcertByAddress() expected 1 parameter but instead received ${arguments.length}`;
+    if (typeof (address) !== 'string') throw `Error: function getConcertByAddress() expected address to be a string but instead recieved a ${typeof (address)}`;
 
     let concertsList = [];
-    let search = location.toLowerCase();
+    let search = address.toLowerCase();
 
     const allConcerts = await this.getAllConcerts();
 
     for(concert in allConcerts){
-        if(concert.concertInfo.location.toLowerCase().includes(search)){
+        if(concert.concertInfo.address.toLowerCase().includes(search)){
             concertsList.push(concert);
         }
     }
@@ -140,7 +155,7 @@ async function getConcertByVenue(venue){
     if (typeof (venue) !== 'string') throw `Error: function getConcertByVenue() expected venue to be a string but instead recieved a ${typeof (venue)}`;
 
     let concertsList = [];
-    let search = location.toLowerCase();
+    let search = venue.toLowerCase();
 
     const allConcerts = await this.getAllConcerts();
 
@@ -178,10 +193,10 @@ module.exports ={
     getConcertByID,
     getAllConcerts,
     getRecommendConcerts,
+    getConcertByTitle,
     getConcertByArtistName,
-    getConcertByLocation,
+    getConcertByAddress,
     getConcertByGenre,
     getConcertByVenue,
-    getConcertByTicketPrice,
 }
 
