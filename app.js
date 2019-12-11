@@ -20,6 +20,24 @@ app.use(session({
     saveUninitialized: true
 }));
 
+const logRequest = (req, res, next) => {
+    var requestLog = "[";
+    requestLog += new Date().toUTCString();
+    requestLog += "]: ";
+    requestLog += req.method;
+    requestLog += " ";
+    requestLog += req.originalUrl;
+    if(!req.session.auth) {
+        requestLog += " (Non-Authenticated User)";
+    } else {
+        requestLog += " (Authenticated User)";
+    }
+    console.log(requestLog);
+    next();
+};  
+
+app.use(logRequest);
+
 configRoutes(app);
 
 app.listen(3000, () => {
