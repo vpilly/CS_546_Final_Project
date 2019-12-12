@@ -14,7 +14,7 @@ router.post("/", async(req, res) => {
 	
 		res.render("concerts/concertSearchResults", { title: "Concerts Found", concertsList: concertsFound, searchContent: req.body.searchContent });
 	} catch (e) {
-		res.status(400).render('posts/searchError', { title: "400 Error" , error: e });
+		res.status(400).render('concerts/concertSearchResultsError', { title: "400 Error" , error: e });
 		return;
 	}
 });
