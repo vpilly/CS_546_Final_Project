@@ -3,7 +3,7 @@ const router = express.Router();
 const concertData = require('../data/concerts');
 
 router.get("/", async(req, res) => {
-	render('concerts/concertSearch')
+	res.render('concerts/concertSearch');
 });
 
 // router.get('/details/:id', async (req, res) => {
