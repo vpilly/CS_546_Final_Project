@@ -233,7 +233,6 @@ async function addComment(artistId, userId, commentText) {
 
     const artist = await this.getArtistByID(artistId);
 
-    const usersCollection = await users();
     const user = await usersCollection.findOne({ _id: objId2 });
     if (user === null) throw `Error: function artists.addComment() could not find a user with the userId: ${userId}`;
 

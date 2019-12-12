@@ -2,6 +2,7 @@ const signupRoutes = require("./signup");
 const loginRoutes = require("./login");
 const logoutRoutes = require("./logout");
 const artistRoutes = require("./artists");
+const concertRoutes = require("./concerts");
 
 const constructorMethod = app => {
     app.use(function (req, res, next) {
@@ -23,6 +24,7 @@ const constructorMethod = app => {
     app.use("/login", loginRoutes);
     app.use("/logout", logoutRoutes);
     app.use("/artists", artistRoutes);
+    app.use("/concerts", concertRoutes);
 
     app.get("/", (req, res) => {
         res.render('home', { title: 'Home' });

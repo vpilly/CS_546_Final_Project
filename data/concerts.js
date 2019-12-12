@@ -81,15 +81,15 @@ async function getRecommendConcerts(){
     return await concertsCollection.find({ 'concertInfo.date': { $gte: today } }).toArray();
 }
 
-async function getConcertByTitle(title, dateRange, priceRange){
-    if (arguments.length !== 3) throw `Error: function getConcertByTitle() expected 3 parameter but instead received ${arguments.length}`;
+async function getConcertByTitle(title, dateAndPrice){
+    if (arguments.length !== 2) throw `Error: function getConcertByTitle() expected 2 parameter but instead received ${arguments.length}`;
     if (typeof (title) !== 'string') throw `Error: function getConcertByTitle() expected title to be a string but instead recieved a ${typeof (title)}`;
 
     let concertsList = [];
     let search = title.toLowerCase();
     const concertsCollection = await concerts();
     const allConcerts = await concertsCollection.find({
-        $and: [ { 'concertInfo.ticketPrice': { $lte: priceRange.upper_limit } }, { 'concertInfo.ticketPrice': { $gte: priceRange.lower_limit }, 'concertInfo.date': { $gte: dateRange.dateFrom }, 'concertInfo.date': { $lte: dateRange.dateTo } } ]
+        $and: [ { 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
     })
     .toArray();
 
@@ -102,8 +102,8 @@ async function getConcertByTitle(title, dateRange, priceRange){
     return concertsList;
 }
 
-async function getConcertByArtistName(artistName, dateRange, priceRange){
-    if (arguments.length !== 3) throw `Error: function getConcertByArtistName() expected 1 parameter but instead received ${arguments.length}`;
+async function getConcertByArtistName(artistName, dateAndPrice){
+    if (arguments.length !== 2) throw `Error: function getConcertByArtistName() expected 2 parameter but instead received ${arguments.length}`;
     if (typeof (artistName) !== 'string') throw `Error: function getConcertByArtistName() expected artistName to be a string but instead recieved a ${typeof (artistName)}`;
     
     let artistsList = [];
@@ -122,7 +122,7 @@ async function getConcertByArtistName(artistName, dateRange, priceRange){
     let concertsList = [];
     for(artist of artistsList){
         let subConcertList = await concertsCollection.find({
-            $and: [ { 'concertInfo.ticketPrice': { $lte: priceRange.upper_limit } }, { 'concertInfo.ticketPrice': { $gte: priceRange.lower_limit }, 'concertInfo.date': { $gte: dateRange.dateFrom }, 'concertInfo.date': { $lte: dateRange.dateTo } } ]
+            $and: [ { 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
         })
         .toArray();
         concertsList.concat(subConcertList);
@@ -130,8 +130,8 @@ async function getConcertByArtistName(artistName, dateRange, priceRange){
     return concertsList
 }
 
-async function getConcertByAddress(address, dateRange, priceRange){
-    if (arguments.length !== 3) throw `Error: function getConcertByAddress() expected 1 parameter but instead received ${arguments.length}`;
+async function getConcertByAddress(address, dateAndPrice){
+    if (arguments.length !== 2) throw `Error: function getConcertByAddress() expected 2 parameter but instead received ${arguments.length}`;
     if (typeof (address) !== 'string') throw `Error: function getConcertByAddress() expected address to be a string but instead recieved a ${typeof (address)}`;
 
     let concertsList = [];
@@ -139,7 +139,7 @@ async function getConcertByAddress(address, dateRange, priceRange){
 
     const concertsCollection = await concerts();
     const allConcerts = await concertsCollection.find({
-        $and: [ { 'concertInfo.ticketPrice': { $lte: priceRange.upper_limit } }, { 'concertInfo.ticketPrice': { $gte: priceRange.lower_limit }, 'concertInfo.date': { $gte: dateRange.dateFrom }, 'concertInfo.date': { $lte: dateRange.dateTo } } ]
+        $and: [ { 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
     })
     .toArray();
 
@@ -152,20 +152,20 @@ async function getConcertByAddress(address, dateRange, priceRange){
     return concertsList;
 }
 
-async function getConcertByGenre(genre, dateRange, priceRange){
-    if (arguments.length !== 3) throw `Error: function getConcertByGenre() expected 1 parameter but instead received ${arguments.length}`;
+async function getConcertByGenre(genre, dateAndPrice){
+    if (arguments.length !== 2) throw `Error: function getConcertByGenre() expected 2 parameter but instead received ${arguments.length}`;
     if (typeof (genre) !== 'string') throw `Error: function getConcertByGenre() expected genre to be a string but instead recieved a ${typeof (genre)}`;
     const concertsCollection = await concerts();
     const concertsList = await concertsCollection.find({
-        $and: [ { 'concertInfo.genre': genre }, { 'concertInfo.ticketPrice': { $lte: priceRange.upper_limit } }, { 'concertInfo.ticketPrice': { $gte: priceRange.lower_limit }, 'concertInfo.date': { $gte: dateRange.dateFrom }, 'concertInfo.date': { $lte: dateRange.dateTo } } ]
+        $and: [ { 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
     })
     .toArray();
     
     return concertsList;
 }
 
-async function getConcertByVenue(venue, dateRange, priceRange){
-    if (arguments.length !== 3) throw `Error: function getConcertByVenue() expected 1 parameter but instead received ${arguments.length}`;
+async function getConcertByVenue(venue, dateAndPrice){
+    if (arguments.length !== 2) throw `Error: function getConcertByVenue() expected 2 parameter but instead received ${arguments.length}`;
     if (typeof (venue) !== 'string') throw `Error: function getConcertByVenue() expected venue to be a string but instead recieved a ${typeof (venue)}`;
 
     let concertsList = [];
@@ -173,7 +173,7 @@ async function getConcertByVenue(venue, dateRange, priceRange){
 
     const concertsCollection = await concerts();
     const allConcerts = await concertsCollection.find({
-        $and: [ { 'concertInfo.ticketPrice': { $lte: priceRange.upper_limit } }, { 'concertInfo.ticketPrice': { $gte: priceRange.lower_limit }, 'concertInfo.date': { $gte: dateRange.dateFrom }, 'concertInfo.date': { $lte: dateRange.dateTo } } ]
+        $and: [ { 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
     })
     .toArray();
 
