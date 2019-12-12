@@ -1,24 +1,62 @@
 <main>
-    <div class="nav">
+
+   {{! 
+   <div class="nav">
         <a class="login" href="/login">login</a>
         <a class="login" href="/signup">signup</a>
         <a class="login" href="/artists">artists</a>
     </div>
-    <h1>Discover Your Concerts!</h1>
-    <input type="radio" name="searchFilter" value="title"> Title<br>
-    <input type="radio" name="searchFilter" value="artist"> Artist
-    <input type="radio" name="searchFilter" value="address"> Location
-    <input type="radio" name="searchFilter" value="genre"> Genre
-    <input type="radio" name="searchFilter" value="venue"> Venue
-  	Search Concert: <input type="search" name="searchContent"><br>
-  	<label for="fromDate">Date: From:</label>
-    <input type="date" id="fromDate" name="fromDate" min="2020-01-01" max="2018-01-01">
-    <label for="fromDate">To:</label>
-    <input type="date" id="toDate" name="toDate" min="2020-01-01" max="2018-01-01"><br>
-        
-    <label for="fromDate">Price: From:</label>
-    <input type="number" id="fromPrice" name="fromPrice" min=0 value= 0>
-    <label for="fromDate">To:</label>
-    <input type="number" id="toPrice" name="toPrice" min=0 value = Infinity><br>
-  	<input type="submit">    
+   }}
+  <div id="wrapper">
+    <div class = "radios">
+      <label class="container"> Concert
+        <input type="radio" name="searchFilter" checked="checked" value="title">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container"> Artist
+        <input type="radio" name="searchFilter" checked="checked" value="artist">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container"> Location
+        <input type="radio" name="searchFilter" checked="checked" value="location">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container"> Genre
+        <input type="radio" name="searchFilter" checked="checked" value="genre">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container"> Venue
+        <input type="radio" name="searchFilter" checked="checked" value="venue">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+
+    {{!
+      <input type="radio" name="searchFilter" value="title"> Title<br>
+      <input type="radio" name="searchFilter" value="artist"> Artist
+      <input type="radio" name="searchFilter" value="address"> Location
+      <input type="radio" name="searchFilter" value="genre"> Genre
+      <input type="radio" name="searchFilter" value="venue"> Venue
+    !}}
+    <div class="main">
+      <p id="title">Discover your concerts!</p>
+      Search Concert: <input type="search" name="searchContent"><br>
+      <label for="fromDate">Date: From:</label>
+      <input type="date" id="fromDate" name="fromDate" min="2020-01-01" max="2018-01-01">
+      <label for="fromDate">To:</label>
+      <input type="date" id="toDate" name="toDate" min="2020-01-01" max="2018-01-01"><br>
+          
+      <label for="fromDate">Price: From:</label>
+      <input type="number" id="fromPrice" name="fromPrice" min=0 value= 0>
+      <label for="fromDate">To:</label>
+      <input type="number" id="toPrice" name="toPrice" min=0 value = Infinity><br>
+      <input type="submit"> 
+    </div>
+
+    </div>
+
 </main>
