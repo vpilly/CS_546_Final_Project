@@ -18,3 +18,5 @@ router.post("/", async(req, res) => {
 		return;
 	}
 });
+
+module.exports = constructorMethod;
