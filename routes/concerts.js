@@ -19,4 +19,4 @@ router.post("/", async(req, res) => {
 	}
 });
 
-module.exports = constructorMethod;
+module.exports = router;
