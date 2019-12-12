@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const concertData = require('../data/concerts');
 
+router.get("/", async(req, res) => {
+	render('concerts/concertSearch')
+});
+
+// router.get('/details/:id', async (req, res) => {
+//     try {
+//         const artist = await artistData.getArtistByID(req.params.id);
+//         res.render('artists/detailedArtist', { artist: artist });
+//     } catch (e) {
+//         res
+//             .status(500)
+//             .json({ error: e });
+//     }
+// });
+
 router.post("/", async(req, res) => {
 	try {
 		let filter = req.body.searchFilter;
