@@ -1,4 +1,5 @@
 <main>
+    <div id="artistSearchWrapper">
     <h1>Artists</h1>
     <p>
         Input an artist's name.
@@ -8,7 +9,6 @@
             <input type="text" name="artistName" placeholder="Artist's Name" id="artistName-input"
                 value="{{artistData.artistName}}">
         </label>
-        <br>
         <button type="submit">Search</button><br>
     </form>
     <br>
@@ -19,4 +19,5 @@
         {{/each}}
     </p>
     {{/if}}
+    </div>
 </main>
