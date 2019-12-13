@@ -4,24 +4,33 @@
     <a class="login" href="/logout">logout</a>
 </div>
 <main>
-    <h1>Concert Search</h1>
-    <p>Welcome! Here is a concert search page! You can look up explore concerts by any means! </p>
-    <form action="/concerts" method="POST">
-        <input type="radio" name="searchFilter" value="title"> Title
-        <input type="radio" name="searchFilter" value="artist"> Artist
-        <input type="radio" name="searchFilter" value="address"> Location
-        <input type="radio" name="searchFilter" value="genre"> Genre
-        <input type="radio" name="searchFilter" value="venue"> Venue<br>
-        Search Concert: <input type="search" name="searchContent"><br>
-        <label for="fromDate">Date: From:</label>
-        <input type="date" id="fromDate" name="fromDate" min="2020-01-01" max="2018-01-01">
-        <label for="fromDate">To:</label>
-        <input type="date" id="toDate" name="toDate" min="2020-01-01" max="2018-01-01"><br>
-
-        <label for="fromDate">Price: From:</label>
-        <input type="number" id="fromPrice" name="fromPrice" min=0 value=0>
-        <label for="fromDate">To:</label>
-        <input type="number" id="toPrice" name="toPrice" min=0 value=Infinity><br>
-        <input type="submit">
-    </form>
-</main>
+        <h1>{{title}}</h1>
+        <p>Welcome! Here is a concert search page! You can look up explore concerts by any means! </p>
+        <form action = "/concerts/search" method = "POST">
+            <input type="radio" name="searchFilter" value="title"> Title
+            <input type="radio" name="searchFilter" value="artist"> Artist
+            <input type="radio" name="searchFilter" value="address"> Location
+            <input type="radio" name="searchFilter" value="genre"> Genre
+            <input type="radio" name="searchFilter" value="venue"> Venue<br>
+            Search Concert: <input type="search" name="searchContent"><br>
+            <label for="fromDate">Date: From:</label>
+            <input type="date" id="fromDate" name="fromDate" min="2019-01-01" max="2021-01-01">
+            <label for="fromDate">To:</label>
+            <input type="date" id="toDate" name="toDate" min="2019-01-01" max="2021-01-01"><br>
+                
+            <label for="fromDate">Price: From:</label>
+            <input type="number" id="fromPrice" name="fromPrice" min=0 value= 0>
+            <label for="fromDate">To:</label>
+            <input type="number" id="toPrice" name="toPrice" min=0 value = Infinity><br>
+            <input type="submit">
+        </form>
+        <h1>Concert Search</h1>
+        <p>Recommend Concert</p>
+        <ul>
+                {{#each recommendConcerts}}
+                <li>
+                <a href="/concerts/details/{{this.id}}">{{this.title}} {{this.artists}} {{this.date}}</a>
+                {{/each}}
+                </li>
+        </ul>
+</main>    
