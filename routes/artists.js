@@ -3,13 +3,13 @@ const router = express.Router();
 const artistData = require('../data/artists');
 
 router.get('/', async (req, res) => {
-    res.render("artists/artistSearch");
+    res.render("artists/artistSearch", { title: "Artists" });
 });
 
 router.get('/details/:id', async (req, res) => {
     try {
         const artist = await artistData.getArtistByID(req.params.id);
-        res.render('artists/detailedArtist', { artist: artist });
+        res.render('artists/detailedArtist', { title: "Artists", artist: artist });
     } catch (e) {
         res
             .status(500)
@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
         res
             .status(400)
             .render('artists/artistSearch', {
+                title: "Artists",
                 errors: errors,
                 hasErrors: true,
                 artistData: artData
@@ -43,6 +44,7 @@ router.post('/', async (req, res) => {
     try {
         const artists = await artistData.searchArtists(artData.artistName);
         res.render("artists/artistSearchResults", {
+            title: "Artists",
             artists: artists,
             artistName: artData.artistName
         });

@@ -28,7 +28,7 @@ async function deleteCookie(email, secret) {
     if (arguments.length !== 2) throw 'Error';
     if (typeof (email) !== 'string') throw 'Error';
     if (typeof (secret) !== 'string') throw 'Error';
-    if (authMap.has(email) && authMap.get(key) === secret) {
+    if (authMap.has(email) && authMap.get(email) === secret) {
         authMap.delete(email);
         return true;
     }
