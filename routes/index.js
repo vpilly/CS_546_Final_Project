@@ -3,18 +3,37 @@ const loginRoutes = require("./login");
 const logoutRoutes = require("./logout");
 const artistRoutes = require("./artists");
 const concertRoutes = require("./concerts");
+const secMap = require('../security/table');
 
 const constructorMethod = app => {
-    app.use(function (req, res, next) {
+    app.use(async function (req, res, next) {
+        const authCookie = req.session.auth;
+
         CurrentTime = new Date();
         let info = `[${CurrentTime.toUTCString()}]: ${req.method} ${req.originalUrl} `;
-        if (req.session.auth)
+        if (authCookie)
             info += "(Authenticated User)";
         else
             info += "(Non-Authenticated User)";
         console.log(info);
 
-        if (req.session.auth || req.originalUrl === '/login' || req.originalUrl === '/signup') {
+        if (authCookie) {
+            try {
+                const confirm = await secMap.verifyCookie(authCookie.email, authCookie.secret);
+                if (confirm === true) {
+                    next();
+                    return;
+                }
+            } catch (e) {
+                res.status(400).json({ error: "Cookie-Parsing Error" });
+                req.session.destroy();
+                return;
+            }
+            res.status(403).json({ error: "Invalid Cookie" });
+            req.session.destroy();
+            return;
+        }
+        else if (req.originalUrl === '/login' || req.originalUrl === '/signup') {
             next();
         }
         else res.redirect('/login');
@@ -27,7 +46,7 @@ const constructorMethod = app => {
     app.use("/concerts", concertRoutes);
 
     app.get("/", (req, res) => {
-        res.render('home', { title: 'Home' });
+        res.render('home', { title: 'Home', logged: true });
     });
 
     app.use("*", (req, res) => {

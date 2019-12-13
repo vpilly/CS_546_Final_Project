@@ -7,6 +7,10 @@ const data = require('../data');
 const userData = data.users;
 
 router.get('/', async (req, res) => {
+    if (req.session.auth) {
+        res.redirect('/');
+        return;
+    }
     res.render('login/signup', { title: 'Signup' });
 });
 
