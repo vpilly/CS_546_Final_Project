@@ -14,6 +14,24 @@ router.get("/", async(req, res) => {
 	
 });
 
+router.post("/", async(req, res) => {
+	let newConcert = req.body;
+
+	if (!newConcert) {
+		res.status(400).render('concerts/error', { title: "404 Error" , error: 'You must provide data to creat a concert!' });
+	  	return;
+	};
+
+	try {
+		const concert = await concertData.addConcert(newConcert.title, newConcert.artists, newConcert.date, newConcert.time,
+			newConcert.address, newConcert.zipcode, newConcert.venue, newConcert.genre, newConcert.description, newConcert.ticketPrice);
+		res.json(concert);
+		res.status(200);
+	} catch (e) {
+		res.status(400).json({ error: e });;
+	}
+});
+
 router.put('/:id', async (req, res) => {
 	const updatedInfo = req.body;
   
@@ -75,6 +93,6 @@ router.delete('/:id', async (req, res) => {
 	  res.status(404).render('concerts/error', { title: "404 Error" , error: e });
 	  return;
 	}
-  });
+});
 
 module.exports = router;
