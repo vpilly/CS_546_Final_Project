@@ -1,23 +1,28 @@
+<div class="nav">
+    <a class="login" href="/artists">artists</a>
+    <a class="login" href="/concerts">concerts</a>
+    <a class="login" href="/logout">logout</a>
+</div>
 <main>
     <div id="artistSearchWrapper">
-    <h1>Artists</h1>
-    <p>
-        Input an artist's name.
-    </p>
-    <form action="/artists" method="POST">
-        <label for="artistName-input">
-            <input type="text" name="artistName" placeholder="Artist's Name" id="artistName-input"
-                value="{{artistData.artistName}}">
-        </label>
-        <button type="submit">Search</button><br>
-    </form>
-    <br>
-    {{#if hasErrors}}
-    <p class="error">
-        {{#each errors}}
-        {{this}}
-        {{/each}}
-    </p>
-    {{/if}}
+        <h1>Artists</h1>
+        <p>
+            Input an artist's name.
+        </p>
+        <form action="/artists" method="POST">
+            <label for="artistName-input">
+                <input type="text" name="artistName" placeholder="Artist's Name" id="artistName-input"
+                    value="{{artistData.artistName}}">
+            </label>
+            <button type="submit">Search</button><br>
+        </form>
+        <br>
+        {{#if hasErrors}}
+        <p class="error">
+            {{#each errors}}
+            {{this}}
+            {{/each}}
+        </p>
+        {{/if}}
     </div>
 </main>

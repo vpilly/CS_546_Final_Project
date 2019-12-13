@@ -1,17 +1,22 @@
+<div class="nav">
+    <a class="login" href="/artists">artists</a>
+    <a class="login" href="/concerts">concerts</a>
+    <a class="login" href="/logout">logout</a>
+</div>
 <h1>{{title}}</h1>
-    <h2>{{searchContent}}</h2>
-        <main class = "concerts">
-            {{#unless concertsList.length}}
-                <p class="not-found">We're sorry, but no results were found for {{searchContent}}.</p>
-            {{/unless}}
-            <ul>
-                {{#each concertsList}}
-                <li>
-                <a href="/concerts/{{this.id}}">{{this.title}} {{this.artist}}</a>
-                {{/each}}
-                </li>
-            </ul>
-        </main>
-        
-        
-<a href = "/" id = "make_another_search">Make another search</a>
+<h2>{{searchContent}}</h2>
+<main class="concerts">
+    {{#unless concertsList.length}}
+    <p class="not-found">We're sorry, but no results were found for {{searchContent}}.</p>
+    {{/unless}}
+    <ul>
+        {{#each concertsList}}
+        <li>
+            <a href="/concerts/{{this.id}}">{{this.title}} {{this.artist}}</a>
+            {{/each}}
+        </li>
+    </ul>
+</main>
+
+
+<a href="/" id="make_another_search">Make another search</a>
