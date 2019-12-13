@@ -1,7 +1,7 @@
 <main>
-        <h1>Concert Search</h1>
+        <h1>{{title}}</h1>
         <p>Welcome! Here is a concert search page! You can look up explore concerts by any means! </p>
-        <form action = "/concerts" method = "POST">
+        <form action = "/concerts/search" method = "POST">
             <input type="radio" name="searchFilter" value="title"> Title
             <input type="radio" name="searchFilter" value="artist"> Artist
             <input type="radio" name="searchFilter" value="address"> Location
@@ -19,6 +19,15 @@
             <input type="number" id="toPrice" name="toPrice" min=0 value = Infinity><br>
             <input type="submit">
         </form>
+        <h1>Concert Search</h1>
+        <p>Recommend Concert</p>
+        <ul>
+                {{#each recommendConcerts}}
+                <li>
+                <a href="/concerts/details/{{this.id}}">{{this.title}} {{this.artists}} {{this.date}}</a>
+                {{/each}}
+                </li>
+        </ul>
 </main>    
     
     

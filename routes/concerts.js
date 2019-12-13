@@ -3,7 +3,15 @@ const router = express.Router();
 const concertData = require('../data/concerts');
 
 router.get("/", async(req, res) => {
-	res.render('concerts/concertSearch');
+	try {
+		const recommendConcerts = await concertData.getRecommendConcerts();
+		res.render('concerts/concertSearch', { title: "Discover Concert" , recommendConcerts: recommendConcerts });
+	} catch (e) {
+		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
+	}
+
+	
 });
 
 router.put('/:id', async (req, res) => {
@@ -33,14 +41,14 @@ router.put('/:id', async (req, res) => {
 router.get('/details/:id', async (req, res) => {
     try {
         const concert = await concertData.getConcertByID(req.params.id);
-        res.render('concerts/detailedConcert', { concert: concert });
+        res.render('concerts/detailedConcert', { title: detailedConcert, concert: concert });
     } catch (e) {
         res.status(500).render('concerts/error', { title: "500 Error" , error: e });
 		return;
     }
 });
 
-router.post("/", async(req, res) => {
+router.post("/search", async(req, res) => {
 	try {
 		let body = req.body;
 		let filter = body.searchFilter;
