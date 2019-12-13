@@ -67,6 +67,54 @@ async function getAllConcerts(){
     return concertList;
 }
 
+async function removeConcert(concertID){
+    if (arguments.length !== 1) throw `Error: function removeConcert() expected 1 parameter but instead received ${arguments.length}`;
+    if (typeof (concertID) !== 'string') throw `Error: function removeConcert() expected concertID to be a string but instead recieved a ${typeof (concertID)}`;
+
+    const objId = ObjectId.createFromHexString(concertID);
+    if (!ObjectId.isValid(objId)) throw `Error: function removeConcert() received an invalid concertId: ${concertID}`;
+    const concertsCollection = await concert();
+
+    const concert = await concertsCollection.findOne({ _id: objId });
+    if (concert === null) throw `Error: function removeConcert() could not find a concert with the concertId: ${concertID}`;
+
+    const deletionInfo = await concertsCollection.removeOne({ _id: objId });
+
+    if (deletionInfo.deletedCount === 0) throw `Error: function removeConcert() could not succesfully remove concert with the concertId: ${concertID}`;
+
+    return concert;
+}
+
+async function updateConcert(concertID, updateinfo){
+    if (arguments.length !== 2) throw `Error: function updateConcert() expected 2 parameters but instead received ${arguments.length}`;
+    if (typeof (concertID) !== 'string') throw `Error: function updateConcert() expected concertID to be a string but instead recieved a ${typeof (concertID)}`;
+    if (typeof (updateinfo) !== 'object') throw `Error: function updateConcert() expected updateinfo to be a object but instead recieved a ${typeof (updateinfo)}`;
+
+    const objId = ObjectId.createFromHexString(concertID);
+    if (!ObjectId.isValid(objId)) throw `Error: function updateConcert() received an invalid concertID: ${concertID}`;
+    const concertsCollection = await concert();
+
+    const concert = await concertsCollection.findOne({ _id: objId });
+    if (concert === null) throw `Error: function updateConcert() could not find a concert with the concertID: ${concertID}`;
+    
+    const updatedConcert = {};
+    if (updateinfo.title) updatedConcert.title = updateinfo.title;
+    if (updateinfo.artist) updatedConcert.artist = updateinfo.artist;
+    if (updateinfo.date) updatedConcert.date = updateinfo.date;
+    if (updateinfo.time) updatedConcert.time = updateinfo.time;
+    if (updateinfo.address) updatedConcert.address = updateinfo.address;
+    if (updateinfo.zipcode) updatedConcert.zipcode = updateinfo.zipcode;
+    if (updateinfo.venue) updatedConcert.venue = updateinfo.venue;
+    if (updateinfo.genre) updatedConcert.genre = updateinfo.genre;
+    if (updateinfo.description) updatedConcert.description = updateinfo.description;
+    if (updateinfo.ticketPrice) updatedConcert.ticketPrice = updateinfo.ticketPrice;
+
+    const updatedInfo = await concertsCollection.updateOne({ _id: objId }, {$set:updatedConcert});
+    
+    if (updatedInfo.modifiedCount === 0) throw `Error: function updateConcert() could not succesfully update concert with the concertID: ${concertID}`;
+    return await concertsCollection.findOne({ _id: objId });;
+}
+
 async function getRecommendConcerts(){
     if (arguments.length !== 0) throw `Error: function getRecommendConcerts() expected 0 parameters but instead received ${arguments.length}`;
     
@@ -190,6 +238,8 @@ module.exports ={
     addConcert,
     getConcertByID,
     getAllConcerts,
+    removeConcert,
+    updateConcert,
     getRecommendConcerts,
     getConcertByTitle,
     getConcertByArtistName,
