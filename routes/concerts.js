@@ -23,12 +23,11 @@ router.post("/", async(req, res) => {
 	};
 
 	try {
-		const concert = await concertData.addConcert(newConcert.title, newConcert.artists, newConcert.date, newConcert.time,
-			newConcert.address, newConcert.zipcode, newConcert.venue, newConcert.genre, newConcert.description, newConcert.ticketPrice);
-		res.json(concert);
-		res.status(200);
+		const concert = await concertData.addConcert(newConcert.title, newConcert.artists, newConcert.date, newConcert.time, newConcert.address, newConcert.zipcode, newConcert.venue, newConcert.genre, newConcert.description, newConcert.ticketPrice);
+		res.render('concerts/detailedConcert', { title: "new Concert", concert: concert });
 	} catch (e) {
-		res.status(400).json({ error: e });;
+		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
 	}
 });
 

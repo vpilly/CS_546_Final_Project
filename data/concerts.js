@@ -205,7 +205,7 @@ async function getConcertByGenre(genre, dateAndPrice){
     if (typeof (genre) !== 'string') throw `Error: function getConcertByGenre() expected genre to be a string but instead recieved a ${typeof (genre)}`;
     const concertsCollection = await concerts();
     const concertsList = await concertsCollection.find({
-        $and: [ { 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
+        $and: [ {'concertInfo.genre':genre },{ 'concertInfo.ticketPrice': { $lte: dateAndPrice.toPrice } }, { 'concertInfo.ticketPrice': { $gte: dateAndPrice.fromPrice }, 'concertInfo.date': { $gte: dateAndPrice.fromDate }, 'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
     })
     .toArray();
     
