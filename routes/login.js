@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
                 const sec = await secMap.newCookie(String(user._id));
                 req.session.auth = {
                     id: String(user._id),
+                    email: formData.email,
                     secret: sec
                 };
                 res.redirect('/');
