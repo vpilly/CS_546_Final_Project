@@ -7,16 +7,17 @@
     <h2>{{searchContent}}</h2>
         <main class = "concerts">
             {{#unless concertsList.length}}
-                <p class="not-found">We're sorry, but no results were found for {{searchContent}}.</p>
+                <p class="not-found">We're sorry, but no results were found for "{{searchContent}}".</p>
             {{/unless}}
             <ul>
                 {{#each concertsList}}
                 <li>
-                <a href="/concerts/details/{{this.id}}">{{this.title}} {{this.artists}} {{this.date}}</a>
+                <a href="/concerts/details/{{this._id}}">{{this.concertInfo.title}}<br>
+                BY  {{this.concertInfo.artists}}<br>
+                ON  {{this.concertInfo.date}}</a>
                 {{/each}}
                 </li>
             </ul>
         </main>
-        
-        
-<a href = "/concerts/concertSearch" id = "make_another_search">Make another search</a>
+<a href = "/concerts" id = "make_another_search">Make another search</a>
+
