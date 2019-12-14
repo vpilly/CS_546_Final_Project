@@ -125,8 +125,9 @@ async function getRecommendConcerts(){
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
-
-    return await concertsCollection.find({ 'concertInfo.date': { $gte: today } }).toArray();
+    let recommendConcerts = await concertsCollection.find({ 'concertInfo.date': { $gte: today } }).toArray();
+    recommendConcerts.length = 3;
+    return recommendConcerts;
 }
 
 async function getConcertByTitle(title, dateAndPrice){
