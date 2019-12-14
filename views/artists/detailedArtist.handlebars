@@ -14,16 +14,16 @@
 
     <br><br><br>
     <dl>
-        <dt>Genre</dt><br>
+        <h3>Genre</h3><br>
         <dd><a href="/artists/genre/{{artist.details.genre}}">{{artist.details.genre}}</a></dd><br>
-        <dt>Website</dt><br>
+        <h3>Website</h3><br>
         <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd><br>
     </dl>
 
     <h3>Upcoming Concerts</h3>
-    {{#if artist.concertsToPerform.length}}
+    {{#if artist.details.concertsToPerform.length}}
         <ul>
-            {{#each artist.concertsToPerform}}
+            {{#each artist.details.concertsToPerform}}
             <li><a href="/concerts/details/{{this}}">Concert Link</a></li>
             {{/each}}
         </ul>

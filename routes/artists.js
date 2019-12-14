@@ -38,7 +38,6 @@ router.get('/details/:id', async (req, res) => {
         const email = req.session.auth.email;
         const user = await userData.getUserByEmail(email);
         const artist = await artistData.getArtistByID(req.params.id);
-        console.log(artist);
         const artist_id = artist._id.toHexString();
 
         const likes = user.profile.favoriteArtists;
