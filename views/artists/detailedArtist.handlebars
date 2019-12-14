@@ -5,11 +5,20 @@
 </div>
 <main>
     <h1>{{artist.details.name}}</h1>
+    {{#if likeFlag}}
+        <a href="/artists/details/{{artist._id}}/yes"><button class="like-button liked"></button></a>
+    {{else}}
+        <a href="/artists/details/{{artist._id}}/no"><button class="like-button"></button></a>
+    {{/if}}
+    
+    <br><br><br>
     <dl>
         <dt>Genre</dt><br>
         <dd><a href="/artists/genre/{{artist.details.genre}}">{{artist.details.genre}}</a></dd><br>
         <dt>Website</dt><br>
-        <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd>
+        <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd><br>
+        <dt>Comments</dt><br>
+        <dd>{{artist.comments}}</dd>
     </dl>
     <br>
     <a href="/artists">Make another search</a>

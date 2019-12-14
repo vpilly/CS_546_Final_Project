@@ -1,17 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const artistData = require('../data/artists');
+const userData = require('../data/users');
 
 router.get('/', async (req, res) => {
     res.render("artists/artistSearch", { title: "Artists" });
 });
 
-router.get('/details/:id/liked', async (req, res) => {
+router.get('/details/:id/:liked', async (req, res) => {
     try {
-        // keep implementing
-        console.log(req.session.auth.email);
+        const email = req.session.auth.email;
+        const user = await userData.getUserByEmail(email);
+        const user_id = user._id.toHexString();
         const artist = await artistData.getArtistByID(req.params.id);
-        res.render('artists/detailedArtist', { title: "Artists", artist: artist });
+        const artist_id = artist._id.toHexString();
+
+        let likeFlag = req.params.liked;
+        
+        if(likeFlag == "yes") {
+            await userData.removeFavArtist(user_id, artist_id);
+        } else {
+            await userData.addFavArtist(user_id, artist_id);
+        }
+
+        const test = await userData.getUserByEmail(email);
+
+        res.redirect('/artists/details/' + req.params.id);
     } catch (e) {
         res
             .status(500)
@@ -21,8 +35,20 @@ router.get('/details/:id/liked', async (req, res) => {
 
 router.get('/details/:id', async (req, res) => {
     try {
+        const email = req.session.auth.email;
+        const user = await userData.getUserByEmail(email);
         const artist = await artistData.getArtistByID(req.params.id);
-        res.render('artists/detailedArtist', { title: "Artists", artist: artist });
+        const artist_id = artist._id.toHexString();
+
+        const likes = user.profile.favoriteArtists;
+        let likeFlag = false;
+        for(let i = 0; i < likes.length; i++) {
+            if(likes[i] == artist_id) {
+                likeFlag = true;
+            }
+        }
+
+        res.render('artists/detailedArtist', { title: "Artists", artist: artist, likeFlag: likeFlag });
     } catch (e) {
         res
             .status(500)

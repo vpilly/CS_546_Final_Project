@@ -193,3 +193,35 @@ li a {
   width: 60%;
   height: 30%;
 }
+
+
+
+
+
+.like-button {
+  display: inline-grid;
+  position: relative;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.like-button::before {
+  font-size: 3em;
+  color: #000;
+  content: '♥';
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.like-button::after {
+  font-size: 3em;
+  color: #ff3252;
+  content: '♥';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s;
+}
+.like-button.liked::after {
+  transform: translate(-50%, -50%) scale(1.1);
+}
