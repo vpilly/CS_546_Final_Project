@@ -21,7 +21,7 @@ const constructorMethod = app => {
 
         if (authCookie) {
             try {
-                const confirm = await secMap.verifyCookie(authCookie.email, authCookie.secret);
+                const confirm = await secMap.verifyCookie(authCookie.id, authCookie.secret);
                 if (confirm === true) {
                     next();
                     return;

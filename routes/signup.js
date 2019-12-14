@@ -112,10 +112,10 @@ router.post('/', async (req, res) => {
 
     try {
         const hash = await bcrypt.hash(formData.password, saltRounds);
-        await userData.addUser(formData.firstName, formData.lastName, formData.email, hash);
-        const sec = await secMap.newCookie(formData.email);
+        const account = await userData.addUser(formData.firstName, formData.lastName, formData.email, hash);
+        const sec = await secMap.newCookie(String(account._id));
         req.session.auth = {
-            email: formData.email,
+            id: String(account._id),
             secret: sec
         };
         res.redirect('/');

@@ -14,34 +14,35 @@ async function generateHexString(length) {
 
 // Errors are intentionally left vague
 
-async function newCookie(email) {
+async function newCookie(key) {
     if (arguments.length !== 1) throw 'Error';
-    if (typeof (email) !== 'string') throw 'Error';
+    console.log(typeof key);
+    if (typeof (key) !== 'string') throw 'Error';
 
     const secret = await generateHexString(128);
-    authMap.set(email, secret);
+    authMap.set(key, secret);
 
     return secret;
 }
 
-async function deleteCookie(email, secret) {
+async function deleteCookie(key, secret) {
     if (arguments.length !== 2) throw 'Error';
-    if (typeof (email) !== 'string') throw 'Error';
+    if (typeof (key) !== 'string') throw 'Error';
     if (typeof (secret) !== 'string') throw 'Error';
-    if (authMap.has(email) && authMap.get(email) === secret) {
-        authMap.delete(email);
+    if (authMap.has(key) && authMap.get(key) === secret) {
+        authMap.delete(key);
         return true;
     }
 
     return false;
 }
 
-async function verifyCookie(email, secret) {
+async function verifyCookie(key, secret) {
     if (arguments.length !== 2) throw 'Error';
-    if (typeof (email) !== 'string') throw 'Error';
+    if (typeof (key) !== 'string') throw 'Error';
     if (typeof (secret) !== 'string') throw 'Error';
 
-    return (authMap.has(email) && authMap.get(email) === secret);
+    return (authMap.has(key) && authMap.get(key) === secret);
 }
 
 module.exports = {
