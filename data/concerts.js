@@ -163,29 +163,22 @@ async function getConcertByArtistName(artistName, dateAndPrice){
     // if (concertsList === null) throw `Error: function getConcertByArtistName() could not find concert with the artist: ${artistName}`;
 
     // return concertsList;
-    let name = artistName.toLowerCase();
+    // let name = artistName.toLowerCase();
 
     const artistsCollection = await artists();
-    const allArtist = await artistsCollection.find({}).toArray();
-    let artistsList = [];
-    for(index = 0; index < allArtist.length; index++){
-        let artist = allArtist[index];
-        if(artist.details.name.toLowerCase().includes(name)){
-            artistsList.push(artist.id);
-        };
-    };
-    
+    const artistsList = await artistsCollection.find({'details.name':artistName}).toArray();
+    // console.log(artistsList.length);
     const concertsCollection = await concerts();
     let concertsList = [];
     for(index = 0; index < artistsList.length; index++){
         let artist = artistsList[index];
         let subConcertList = await concertsCollection.find({
-            $and: [ {'consertInfo.artists': artist},{ 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertnfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
+            $and: [ {'consertInfo.artists': artist.id},{ 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertnfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
         })
         .toArray();
         concertsList.concat(subConcertList);
     }
-    return concertsList
+    return concertsList;
 }
 
 async function getConcertByAddress(address, dateAndPrice){

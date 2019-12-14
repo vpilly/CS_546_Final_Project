@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const concertData = require('../data/concerts');
+const artistData = require('../data/artists');
 
 router.get("/", async(req, res) => {
 	try {
 		const recommendConcerts = await concertData.getRecommendConcerts();
+		for(i = 0; i < recommendConcerts.length; i++){
+			let artistIdList = recommendConcerts[i].concertInfo.artists;
+			for(j = 0; j < artistIdList.length; j++){
+				let artist = await artistData.getArtistByID(artistIdList[j]);
+				artistIdList[j] = artist.details.name;
+			};
+		};
 		res.render('concerts/concertSearch', { title: "Concert Searching" , recommendConcerts: recommendConcerts });
 	} catch (e) {
 		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
@@ -57,7 +65,13 @@ router.put('/:id', async (req, res) => {
 
 router.get('/details/:id', async (req, res) => {
     try {
-        const concert = await concertData.getConcertByID(req.params.id);
+		const concert = await concertData.getConcertByID(req.params.id);
+
+		let artistIdList = concert.concertInfo.artists;
+		for(j = 0; j < artistIdList.length; j++){
+			let artist = await artistData.getArtistByID(artistIdList[j]);
+			concert.concertInfo.artists[j] = artist.details.name;
+		};	
         res.render('concerts/detailedConcert', { title: "Concert Details", concert: concert });
     } catch (e) {
         res.status(500).render('concerts/error', { title: "500 Error" , error: e });
@@ -76,7 +90,13 @@ router.post("/search", async(req, res) => {
 		if(filter == "address") concertsFound = await concertData.getConcertByAddress(body.searchContent,body);
 		if(filter == "genre") concertsFound = await concertData.getConcertByGenre(body.searchContent,body);
 		if(filter == "venue") concertsFound = await concertData.getConcertByVenue(body.searchContent,body);
-		console.log(concertsFound);
+		for(i = 0; i < concertsFound.length; i++){
+			let artistIdList = concertsFound[i].concertInfo.artists;
+			for(j = 0; j < artistIdList.length; j++){
+				let artist = await artistData.getArtistByID(artistIdList[j]);
+				artistIdList[j] = artist.details.name;
+			};
+		};
 		res.render("concerts/concertSearchResults", { title: "Concerts Found", concertsList: concertsFound, searchContent: body.searchContent });
 	} catch (e) {
 		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
