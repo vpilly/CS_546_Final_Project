@@ -6,10 +6,49 @@ router.get('/', async (req, res) => {
     res.render("artists/artistSearch", { title: "Artists" });
 });
 
+router.get('/details/:id/liked', async (req, res) => {
+    try {
+        // keep implementing
+        console.log(req.session.auth.email);
+        const artist = await artistData.getArtistByID(req.params.id);
+        res.render('artists/detailedArtist', { title: "Artists", artist: artist });
+    } catch (e) {
+        res
+            .status(500)
+            .json({ error: e });
+    }
+});
+
 router.get('/details/:id', async (req, res) => {
     try {
         const artist = await artistData.getArtistByID(req.params.id);
         res.render('artists/detailedArtist', { title: "Artists", artist: artist });
+    } catch (e) {
+        res
+            .status(500)
+            .json({ error: e });
+    }
+});
+
+router.get('/genre/:genre', async (req, res) => {
+    try {
+        let genre = req.params.genre;
+
+        const artists = await artistData.getArtistsByGenre(genre);
+        res.render('artists/genreResults', { title: "Artists", artists: artists, genre: genre });
+    } catch (e) {
+        res
+            .status(500)
+            .json({ error: e });
+    }
+});
+
+router.get('/genre/:genre/:subgenre', async (req, res) => {
+    try {
+        let genre = req.params.genre + "/" + req.params.subgenre;
+
+        const artists = await artistData.getArtistsByGenre(genre);
+        res.render('artists/genreResults', { title: "Artists", artists: artists, genre: genre });
     } catch (e) {
         res
             .status(500)
