@@ -82,6 +82,32 @@ router.get('/genre/:genre/:subgenre', async (req, res) => {
     }
 });
 
+router.post('/details/:id/comment', async (req, res) => {
+
+    const email = req.session.auth.email;
+    const user = await userData.getUserByEmail(email);
+    const user_id = user._id.toHexString();
+    const artist = await artistData.getArtistByID(req.params.id);
+    const artist_id = artist._id.toHexString();
+
+    const likes = user.profile.favoriteArtists;
+    let likeFlag = false;
+    for(let i = 0; i < likes.length; i++) {
+        if(likes[i] == artist_id) {
+            likeFlag = true;
+        }
+    }
+
+    let commentData = req.body;
+
+    try {
+        await artistData.addComment(artist_id, user_id, commentData.comment);
+        res.redirect("/artists/details/" + artist_id);
+    } catch (e) {
+        res.status(500).json({ error: e });
+    }
+});
+
 router.post('/', async (req, res) => {
     let artData = req.body;
     let errors = [];

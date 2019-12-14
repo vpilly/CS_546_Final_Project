@@ -17,9 +17,21 @@
         <dd><a href="/artists/genre/{{artist.details.genre}}">{{artist.details.genre}}</a></dd><br>
         <dt>Website</dt><br>
         <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd><br>
-        <dt>Comments</dt><br>
-        <dd>{{artist.comments}}</dd>
     </dl>
     <br>
+    <div id="respond">
+
+        <h3>Leave a Comment</h3>
+
+        <form action="/artists/details/{{artist._id}}/comment" method="post" id="commentform">
+
+            <label for="comment" class="required"></label>
+            <textarea name="comment" id="comment" rows="6" tabindex="4"  required="required"></textarea>
+
+            <input name="submit" type="submit" value="Submit Comment" />
+
+        </form>
+
+    </div><br><br>
     <a href="/artists">Make another search</a>
 </main>
