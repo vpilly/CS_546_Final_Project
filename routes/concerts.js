@@ -5,7 +5,7 @@ const concertData = require('../data/concerts');
 router.get("/", async(req, res) => {
 	try {
 		const recommendConcerts = await concertData.getRecommendConcerts();
-		res.render('concerts/concertSearch', { title: "Discover Concert" , recommendConcerts: recommendConcerts });
+		res.render('concerts/concertSearch', { title: "Concert Searching" , recommendConcerts: recommendConcerts });
 	} catch (e) {
 		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
 		return;
@@ -68,9 +68,7 @@ router.get('/details/:id', async (req, res) => {
 router.post("/search", async(req, res) => {
 	try {
 		let body = req.body;
-		let filter = body.searchFilter;
-		console.log(filter)
-		console.log(body.searchContent)
+		let filter = body.searchFilter
 
 		let concertsFound = [];
 		if(filter == "title") concertsFound = await concertData.getConcertByTitle(body.searchContent,body);

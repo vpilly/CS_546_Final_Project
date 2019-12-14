@@ -14,9 +14,9 @@
             <input type="radio" name="searchFilter" value="venue"> Venue<br>
             Search Concert: <input type="search" name="searchContent"><br>
             <label for="fromDate">Date: From:</label>
-            <input type="date" id="fromDate" name="fromDate" min="2019-01-01" max="2021-01-01" value="2019-01-01">
+            <input type="date" id="fromDate" name="fromDate" min="2010-01-01" max="2100-01-01" value="2019-01-01">
             <label for="fromDate">To:</label>
-            <input type="date" id="toDate" name="toDate" min="2019-01-01" max="2021-01-01" value = "2021-01-01"><br>
+            <input type="date" id="toDate" name="toDate" min="2010-01-01" max="2100-01-01" value = "2021-01-01"><br>
                 
             <label for="fromDate">Price: From:</label>
             <input type="number" id="fromPrice" name="fromPrice" min=0 value= 0>
@@ -24,8 +24,7 @@
             <input type="number" id="toPrice" name="toPrice" min=0 value = 10000><br>
             <button type ="submit">Search</button>
         </form>
-        <h2>Concert Search</h2>
-        <p>Recommend Concert</p>
+        <h2>Recommend Concert</h2>
         <ul>
                 {{#each recommendConcerts}}
                 <li>
@@ -35,6 +34,7 @@
                 {{/each}}
                 </li>
         </ul>
+        
         <h2>Creat a new con(for test,delete this part later)</h2>
         <form action = "/concerts" method = "POST">
             title<input type="text" name="title"><br>
