@@ -1,9 +1,7 @@
 const dbConnection = require('../config/mongoConnection');
 const artists = require('../data/artists');
 const concerts = require('../data/concerts');
-
 const artistsData = require("./artists_with_site.json");
-const concertsData = require("./concerts.json");
 // only artists database seeding implemented
 
 const main = async () => {
@@ -16,10 +14,11 @@ const main = async () => {
         await artists.addArtist(row.name, row.genre, row.mtv);
     }
 
-    for (index = 0; index < concertsData.length; index++) {
-        const row = concertsData[index];
-        await concerts.addConcert(row.title, row.artists, row.date, row.time, row.address, row.zipcode, row.venue, row.genre, row.description, row.ticketPrice);
-    };
+    await concerts.addConcert('star', ['Adele','Sam Smith'], '2019-01-01', '20:00', '130 NY-22 Pawling, NY', '12564', 'Daryls House', ["pop", 'rock'], 'good', '100');
+    await concerts.addConcert('moon', ['Mariah Carey','Rita Ora'], '2020-01-01', '20:00', '24 fifth street, hoboken, NJ', '07030', 'DebaunPAC', ["Hip-Hop", 'rock'], 'excellent', '200');
+    await concerts.addConcert('sun', ['Adele','Mariah Carey'], '2019-06-01', '20:00', '130 NY-22 Pawling, NY', '12564', 'Daryls House', ["pop", 'Country'], 'wonderful', '300');
+    await concerts.addConcert('earth', ['Sam Smith','Rita Ora'], '2020-06-01', '20:00', '24 fifth street, hoboken, NJ', '07030', 'DebaunPAC', ["rap", 'house'], 'perfect', '400');
+
 
 
     await db.serverConfig.close();
