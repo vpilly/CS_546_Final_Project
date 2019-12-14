@@ -143,6 +143,7 @@ async function getConcertByTitle(title, dateAndPrice){
     if (allConcerts === null) throw `Error: function getConcertByTitle() could not find concert with the title: ${title}`;
     let concertsList = [];
     for (index = 0; index < allConcerts.length; index++) { 
+        if (concertsList.length > 20) break;
         let concert = allConcerts[index];
         if(concert.concertInfo.title.includes(search)){
             concertsList.push(concert);
@@ -163,21 +164,28 @@ async function getConcertByArtistName(artistName, dateAndPrice){
     // if (concertsList === null) throw `Error: function getConcertByArtistName() could not find concert with the artist: ${artistName}`;
 
     // return concertsList;
-    // let name = artistName.toLowerCase();
+    let search = artistName.toLowerCase();
 
     const artistsCollection = await artists();
-    const artistsList = await artistsCollection.find({'details.name':artistName}).toArray();
-    // console.log(artistsList.length);
+    const allArtist = await artistsCollection.find({}).toArray();
+    let artistsList =[];
+    for (let i = 0; i < allArtist.length; i++) {
+        if(artistsList.length > 20) break;
+        let artist = allArtist[i];
+        if (artist.details.name.toLowerCase().includes(search)) {
+            artistsList.push(artist);
+        };
+    };
     const concertsCollection = await concerts();
     let concertsList = [];
     for(index = 0; index < artistsList.length; index++){
         let artist = artistsList[index];
         let subConcertList = await concertsCollection.find({
-            $and: [ {'consertInfo.artists': artist.id},{ 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertnfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
+            $and: [{ 'concertInfo.artists': String(artist._id)},{ 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }},{'concertInfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
         })
         .toArray();
-        concertsList.concat(subConcertList);
-    }
+        concertsList = concertsList.concat(subConcertList);
+    };
     return concertsList;
 }
 
@@ -194,6 +202,7 @@ async function getConcertByAddress(address, dateAndPrice){
     if (allConcerts === null) throw `Error: function getConcertByAddress() could not find concert with the address: ${address}`;
     let concertsList = [];
     for (index = 0; index < allConcerts.length; index++) { 
+        if (concertsList.length > 20) break;
         let concert = allConcerts[index];
         if(concert.concertInfo.address.includes(search)){
             concertsList.push(concert);
@@ -212,7 +221,7 @@ async function getConcertByGenre(genre, dateAndPrice){
     })
     .toArray();
     if (concertsList === null) throw `Error: function getConcertByGenre() could not find concert with the genre: ${genre}`;
-
+    if (concertsList.length > 20) concertsList = concertsList.slice(0, 20);
     return concertsList;
 }
 
@@ -229,6 +238,7 @@ async function getConcertByVenue(venue, dateAndPrice){
     if (allConcerts === null) throw `Error: function getConcertByVenue() could not find concert with the venue: ${venue}`;
     let concertsList = [];
     for (index = 0; index < allConcerts.length; index++) { 
+        if (concertsList.length > 20) break;
         let concert = allConcerts[index];
         if(concert.concertInfo.venue.includes(search)){
             concertsList.push(concert);
