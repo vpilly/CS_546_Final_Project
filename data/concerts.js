@@ -247,6 +247,28 @@ async function getConcertByVenue(venue, dateAndPrice){
     return concertsList;
 }
 
+async function getByGenre(genre){
+    if (arguments.length !== 1) throw `Error: function getByGenre() expected 1 parameter but instead received ${arguments.length}`;
+    if (typeof (genre) !== 'string') throw `Error: function getByGenre() expected genre to be a string but instead recieved a ${typeof (genre)}`;
+    
+    const concertsCollection = await concerts();
+    const concertsList = await concertsCollection.find({'concertInfo.genre':genre}).toArray();
+    if (concertsList === null) throw `Error: function getByGenre() could not find concert with the genre: ${genre}`;
+    if (concertsList.length > 20) concertsList = concertsList.slice(0, 20);
+    return concertsList;
+}
+
+async function getByVenue(venue){
+    if (arguments.length !== 1) throw `Error: function getByVenue() expected 1 parameter but instead received ${arguments.length}`;
+    if (typeof (venue) !== 'string') throw `Error: function getByVenue() expected genre to be a string but instead recieved a ${typeof (venue)}`;
+    
+    const concertsCollection = await concerts();
+    const concertsList = await concertsCollection.find({'concertInfo.venue':venue}).toArray();
+    if (concertsList === null) throw `Error: function getByVenue() could not find concert with the genre: ${venue}`;
+    if (concertsList.length > 20) concertsList = concertsList.slice(0, 20);
+    return concertsList;
+}
+
 module.exports ={
     addConcert,
     getConcertByID,
@@ -259,5 +281,7 @@ module.exports ={
     getConcertByAddress,
     getConcertByGenre,
     getConcertByVenue,
+    getByGenre,
+    getByVenue
 }
 

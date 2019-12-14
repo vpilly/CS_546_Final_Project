@@ -1,0 +1,21 @@
+<div class="nav">
+    <a class="login" href="/artists">artists</a>
+    <a class="login" href="/concerts">concerts</a>
+    <a class="login" href="/logout">logout</a>
+</div>
+<main>
+    <div id="concertResultWrapper">
+        <h1>Concerts in {{genre}}</h1>
+        {{#if concerts.length}}
+        <ul>
+            {{#each concerts}}
+            <li><a href="/concerts/details/{{this._id}}">{{this.concertInfo.title}}</a></li>
+            {{/each}}
+        </ul>
+        {{else}}
+        <p class="error">We're sorry, but no results were found for {{genre}}.</p>
+        {{/if}}
+        <br>
+        <a href="/concerts">Make another search</a>
+    </div>
+</main>

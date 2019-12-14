@@ -3,6 +3,7 @@ const loginRoutes = require("./login");
 const logoutRoutes = require("./logout");
 const artistRoutes = require("./artists");
 const concertRoutes = require("./concerts");
+const profileRoutes = require("./profile");
 const secMap = require('../security/table');
 
 const constructorMethod = app => {
@@ -21,7 +22,7 @@ const constructorMethod = app => {
 
         if (authCookie) {
             try {
-                const confirm = await secMap.verifyCookie(authCookie.email, authCookie.secret);
+                const confirm = await secMap.verifyCookie(authCookie.id, authCookie.secret);
                 if (confirm === true) {
                     next();
                     return;
