@@ -75,7 +75,7 @@ async function searchArtists(searchstring) {
         }
     }
 
-    return artists;
+    return artists.slice(0, 20);
 
 }
 
@@ -87,7 +87,7 @@ async function getArtistsByGenre(genre) {
     const artistList = await artistsCollection.find({ "details.genre": genre }).toArray();
     if (artistList === null) throw `Error: function artists.getArtistsByGenre() could not find artists with the genre: ${genre}`;
 
-    return artistList;
+    return artistList.slice(0, 20);
 }
 
 async function getArtistByConcertPerformed(concertId) {

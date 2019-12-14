@@ -17,6 +17,32 @@ router.get('/details/:id', async (req, res) => {
     }
 });
 
+router.get('/genre/:genre', async (req, res) => {
+    try {
+        let genre = req.params.genre;
+
+        const artists = await artistData.getArtistsByGenre(genre);
+        res.render('artists/genreResults', { title: "Artists", artists: artists, genre: genre });
+    } catch (e) {
+        res
+            .status(500)
+            .json({ error: e });
+    }
+});
+
+router.get('/genre/:genre/:subgenre', async (req, res) => {
+    try {
+        let genre = req.params.genre + "/" + req.params.subgenre;
+
+        const artists = await artistData.getArtistsByGenre(genre);
+        res.render('artists/genreResults', { title: "Artists", artists: artists, genre: genre });
+    } catch (e) {
+        res
+            .status(500)
+            .json({ error: e });
+    }
+});
+
 router.post('/', async (req, res) => {
     let artData = req.body;
     let errors = [];
