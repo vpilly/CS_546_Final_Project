@@ -7,10 +7,10 @@
     <h1>Artist Found</h1>
     <h2>{{artist.details.name}}</h2>
     <dl>
-        <dt>ID</dt>
-        <dd>{{artist._id}}</dd>
-        <dt>Genre</dt>
-        <dd>{{artist.details.genre}}</dd>
+        <dt>Genre</dt><br>
+        <dd>{{artist.details.genre}}</dd><br>
+        <dt>Website</dt><br>
+        <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd>
     </dl>
     <br>
     <a href="/artists">Make another search</a>
