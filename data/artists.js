@@ -223,7 +223,7 @@ async function removeConcertToPerform(artistId, concertId) {
 async function addComment(artistId, userId, commentText) {
     if (arguments.length !== 3) throw `Error: function artists.addComment() expected 3 parameters but instead received ${arguments.length}`;
     if (typeof (artistId) !== 'string') throw `Error: function artists.addComment() expected artistId to be a string but instead recieved a ${typeof (artistId)}`;
-    if (typeof (concertId) !== 'string') throw `Error: function artists.addComment() expected concertId to be a string but instead recieved a ${typeof (concertId)}`;
+    if (typeof (userId) !== 'string') throw `Error: function artists.addComment() expected userId to be a string but instead recieved a ${typeof (userId)}`;
     if (typeof (commentText) !== 'string') throw `Error: function artists.addComment() expected commentText to be a string but instead recieved a ${typeof (commentText)}`;
 
     const objId = ObjectId.createFromHexString(artistId);

@@ -11,9 +11,12 @@
             <input type="email" name="email" id="email" placeholder="E-Mail " required /><br>
             <input type="password" name="password" id="password" placeholder="Password " required /><br>
             <br>
-            <button type="submit" class="button">Submit</button>
+            <button type="button" class="button" id="verify">Submit</button>
         </form>
     </div>
+    <ul id="front">
+
+    </ul>
 
     {{#if hasErrors}}
     <ul class="error-list">
@@ -25,3 +28,6 @@
     </ul>
     {{/if}}
 </main>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/public/js/ajax.js"></script>

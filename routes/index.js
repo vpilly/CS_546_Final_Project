@@ -3,23 +3,26 @@ const loginRoutes = require("./login");
 const logoutRoutes = require("./logout");
 const artistRoutes = require("./artists");
 const concertRoutes = require("./concerts");
+const profileRoutes = require("./profile");
 const secMap = require('../security/table');
 
 const constructorMethod = app => {
     app.use(async function (req, res, next) {
         const authCookie = req.session.auth;
 
-        CurrentTime = new Date();
-        let info = `[${CurrentTime.toUTCString()}]: ${req.method} ${req.originalUrl} `;
-        if (authCookie)
-            info += "(Authenticated User)";
-        else
-            info += "(Non-Authenticated User)";
-        console.log(info);
+        if (req.originalUrl !== '/signup/email') {
+            CurrentTime = new Date();
+            let info = `[${CurrentTime.toUTCString()}]: ${req.method} ${req.originalUrl} `;
+            if (authCookie)
+                info += "(Authenticated User)";
+            else
+                info += "(Non-Authenticated User)";
+            console.log(info);
+        }
 
         if (authCookie) {
             try {
-                const confirm = await secMap.verifyCookie(authCookie.email, authCookie.secret);
+                const confirm = await secMap.verifyCookie(authCookie.id, authCookie.secret);
                 if (confirm === true) {
                     next();
                     return;
@@ -33,7 +36,7 @@ const constructorMethod = app => {
             req.session.destroy();
             return;
         }
-        else if (req.originalUrl === '/login' || req.originalUrl === '/signup') {
+        else if (req.originalUrl === '/login' || req.originalUrl === '/signup' || req.originalUrl === '/signup/email') {
             next();
         }
         else res.redirect('/login');
