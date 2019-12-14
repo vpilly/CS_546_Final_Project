@@ -18,7 +18,22 @@
         <dt>Website</dt><br>
         <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd><br>
     </dl>
-    <br>
+    <h3>Comments</h3>
+    {{#if artist.comments.length}}
+        <ul>
+            {{#each artist.comments}}
+            <li>{{this.time}}
+                <ul>
+                    <li>User ID: {{this.user}}</li>
+                    <li>Comment: {{this.comment}}</li>
+                </ul>
+            </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>Be the first one to leave a comment!</p>
+    {{/if}}
+
     <div id="respond">
 
         <h3>Leave a Comment</h3>
@@ -33,5 +48,6 @@
         </form>
 
     </div><br><br>
+
     <a href="/artists">Make another search</a>
 </main>

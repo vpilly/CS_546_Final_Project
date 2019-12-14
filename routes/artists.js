@@ -38,6 +38,7 @@ router.get('/details/:id', async (req, res) => {
         const email = req.session.auth.email;
         const user = await userData.getUserByEmail(email);
         const artist = await artistData.getArtistByID(req.params.id);
+        console.log(artist);
         const artist_id = artist._id.toHexString();
 
         const likes = user.profile.favoriteArtists;
@@ -89,14 +90,6 @@ router.post('/details/:id/comment', async (req, res) => {
     const user_id = user._id.toHexString();
     const artist = await artistData.getArtistByID(req.params.id);
     const artist_id = artist._id.toHexString();
-
-    const likes = user.profile.favoriteArtists;
-    let likeFlag = false;
-    for(let i = 0; i < likes.length; i++) {
-        if(likes[i] == artist_id) {
-            likeFlag = true;
-        }
-    }
 
     let commentData = req.body;
 
