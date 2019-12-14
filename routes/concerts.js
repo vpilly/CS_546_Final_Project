@@ -70,7 +70,11 @@ router.get('/details/:id', async (req, res) => {
 		let artistIdList = concert.concertInfo.artists;
 		for(j = 0; j < artistIdList.length; j++){
 			let artist = await artistData.getArtistByID(artistIdList[j]);
-			concert.concertInfo.artists[j] = artist.details.name;
+			let newObj = {
+				name: artist.details.name,
+				id : String(artist._id)
+			};
+			concert.concertInfo.artists[j] = newObj;
 		};	
         res.render('concerts/detailedConcert', { title: "Concert Details", concert: concert });
     } catch (e) {
@@ -94,13 +98,8 @@ router.post("/search", async(req, res) => {
 			let artistIdList = concertsFound[i].concertInfo.artists;
 			for(j = 0; j < artistIdList.length; j++){
 				let artist = await artistData.getArtistByID(artistIdList[j]);
-				let newObj = {
-					name: artist.details.name,
-					id:artistIdList[j]
-				};
-				artistIdList[j] = newObj;
+				artistIdList[j] = artist.details.name;
 			};
-			console.log(artistIdList);
 		};
 
 		res.render("concerts/concertSearchResults", { title: "Concerts Found", concertsList: concertsFound, searchContent: body.searchContent });
