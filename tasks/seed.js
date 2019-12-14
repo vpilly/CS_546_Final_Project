@@ -14,10 +14,10 @@ const main = async () => {
         let newArtist = await artists.addArtist(row.name, row.genre, row.mtv);
         artistsIds.push(String(newArtist._id));
     };
-    const artists1 = [artistsIds.pop(0),artistsIds.pop(0)];
-    const artists2 = [artistsIds.pop(0),artistsIds.pop(0)];
-    const artists3 = [artistsIds.pop(0),artistsIds.pop(0)];
-    const artists4 = [artistsIds.pop(0),artistsIds.pop(0)];
+    const artists1 = [artistsIds.shift(),artistsIds.shift()];
+    const artists2 = [artistsIds.shift(),artistsIds.shift()];
+    const artists3 = [artistsIds.shift(),artistsIds.shift()];
+    const artists4 = [artistsIds.shift(),artistsIds.shift()];
     const concert1 = await concerts.addConcert('star', artists1, '2019-01-01', '20:00', '130 NY-22 Pawling, NY', '12564', 'Daryls House', ["pop", 'rock'], 'good', '100');
     const concert2 = await concerts.addConcert('moon', artists2, '2020-01-01', '20:00', '24 fifth street, hoboken, NJ', '07030', 'DebaunPAC', ["Hip-Hop", 'rock'], 'excellent', '200');
     const concert3 = await concerts.addConcert('sun', artists3, '2019-06-01', '20:00', '130 NY-22 Pawling, NY', '12564', 'Daryls House', ["pop", 'Country'], 'wonderful', '300');
