@@ -94,9 +94,15 @@ router.post("/search", async(req, res) => {
 			let artistIdList = concertsFound[i].concertInfo.artists;
 			for(j = 0; j < artistIdList.length; j++){
 				let artist = await artistData.getArtistByID(artistIdList[j]);
-				artistIdList[j] = artist.details.name;
+				let newObj = {
+					name: artist.details.name,
+					id:artistIdList[j]
+				};
+				artistIdList[j] = newObj;
 			};
+			console.log(artistIdList);
 		};
+
 		res.render("concerts/concertSearchResults", { title: "Concerts Found", concertsList: concertsFound, searchContent: body.searchContent });
 	} catch (e) {
 		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
@@ -113,6 +119,30 @@ router.delete('/:id', async (req, res) => {
 	  res.status(404).render('concerts/error', { title: "404 Error" , error: e });
 	  return;
 	}
+});
+
+router.get('/genre/:genre', async (req, res) => {
+    try {
+        let genre = req.params.genre;
+
+        const concerts = await concertData.getByGenre(genre);
+        res.render('concerts/genreResults', { title: "Concerts", concerts: concerts, genre: genre });
+    } catch (e) {
+        res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
+    }
+});
+
+router.get('/venue/:venue', async (req, res) => {
+    try {
+        let venue = req.params.venue;
+
+        const concerts = await concertData.getByVenue(venue);
+        res.render('concerts/venueResults', { title: "Concerts", concerts: concerts, venue: venue });
+    } catch (e) {
+        res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
+    }
 });
 
 module.exports = router;
