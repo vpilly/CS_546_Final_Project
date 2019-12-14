@@ -18,6 +18,19 @@
         <dt>Website</dt><br>
         <dd><a href="{{artist.details.website}}">{{artist.details.website}}</a></dd><br>
     </dl>
+
+    <h3>Upcoming Concerts</h3>
+    {{#if artist.concertsToPerform.length}}
+        <ul>
+            {{#each artist.concertsToPerform}}
+            <li><a href="/concerts/details/{{this}}">Concert Link</a></li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No future concerts scheduled yet!</p>
+    {{/if}}
+
+
     <h3>Comments</h3>
     {{#if artist.comments.length}}
         <ul>
