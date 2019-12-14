@@ -126,7 +126,7 @@ async function getRecommendConcerts(){
     let yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
     let recommendConcerts = await concertsCollection.find({ 'concertInfo.date': { $gte: today } }).toArray();
-    recommendConcerts.length = 3;
+    if (recommendConcerts.length > 5){recommendConcerts.length = 3;}
     return recommendConcerts;
 }
 
