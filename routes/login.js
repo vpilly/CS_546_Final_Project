@@ -30,9 +30,9 @@ router.post('/', async (req, res) => {
         if (user) {
             confirm = await bcrypt.compare(formData.password, user.hashedPassword);
             if (confirm === true) {
-                const sec = await secMap.newCookie(user.email);
+                const sec = await secMap.newCookie(String(user._id));
                 req.session.auth = {
-                    email: user.email,
+                    id: String(user._id),
                     secret: sec
                 };
                 res.redirect('/');
