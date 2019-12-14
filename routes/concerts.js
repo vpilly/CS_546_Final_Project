@@ -115,4 +115,28 @@ router.delete('/:id', async (req, res) => {
 	}
 });
 
+router.get('/genre/:genre', async (req, res) => {
+    try {
+        let genre = req.params.genre;
+
+        const concerts = await concertData.getByGenre(genre);
+        res.render('concerts/genreResults', { title: "Concerts", concerts: concerts, genre: genre });
+    } catch (e) {
+        res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
+    }
+});
+
+router.get('/venue/:venue', async (req, res) => {
+    try {
+        let venue = req.params.venue;
+
+        const concerts = await concertData.getByVenue(venue);
+        res.render('concerts/venueResults', { title: "Concerts", concerts: concerts, venue: venue });
+    } catch (e) {
+        res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
+    }
+});
+
 module.exports = router;

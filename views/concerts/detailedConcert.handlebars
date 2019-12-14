@@ -20,9 +20,15 @@
                 <dt>Zip Code</dt>
                 <dd>{{concert.concertInfo.zipcode}}</dd>
                 <dt>Venue</dt>
-                <dd>{{concert.concertInfo.venue}}</dd>
+                <dd><li><a href="/concerts/venue/{{concert.concertInfo.venue}}">{{concert.concertInfo.venue}}</a></li></dd>
                 <dt>Genre</dt>
-                <dd>{{concert.concertInfo.genre}}</dd>
+                <dd>
+                    {{#each concert.concertInfo.genre}}
+                    <li>
+                    <a href="/concerts/genre/{{this}}">{{this}}</a>
+                    {{/each}}
+                    </li>
+                </dd>
                 <dt>Description</dt>
                 <dd>{{concert.concertInfo.description}}</dd>
                 <dt>Ticket Price</dt>
