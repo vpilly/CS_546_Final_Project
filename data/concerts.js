@@ -155,37 +155,37 @@ async function getConcertByArtistName(artistName, dateAndPrice){
     if (arguments.length !== 2) throw `Error: function getConcertByArtistName() expected 2 parameter but instead received ${arguments.length}`;
     if (typeof (artistName) !== 'string') throw `Error: function getConcertByArtistName() expected artistName to be a string but instead recieved a ${typeof (artistName)}`;
     
-    const concertsCollection = await concerts();
-    const concertsList = await concertsCollection.find({
-        $and: [ {'concertInfo.artists':artistName}, { 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertInfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
-    })
-    .toArray();
-    if (concertsList === null) throw `Error: function getConcertByArtistName() could not find concert with the artist: ${artistName}`;
-
-    return concertsList;
-    // let name = artistName.toLowerCase();
-
-    // const artistsCollection = await artists();
-    // const allArtist = await artistsCollection.find({}).toArray();
-    // let artistsList = [];
-    // for(index = 0; index < allArtist.length; index++){
-    //     let artist = allArtist[index];
-    //     if(artist.details.name.toLowerCase().includes(name)){
-    //         artistsList.push(artist._id);
-    //     };
-    // };
-    
     // const concertsCollection = await concerts();
-    // let concertsList = [];
-    // for(index = 0; index < artistsList.length; index++){
-    //     let artist = artistsList[index];
-    //     let subConcertList = await concertsCollection.find({
-    //         $and: [ {'consertInfo.artists': artist},{ 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertnfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
-    //     })
-    //     .toArray();
-    //     concertsList.concat(subConcertList);
-    // }
-    // return concertsList
+    // const concertsList = await concertsCollection.find({
+    //     $and: [ {'concertInfo.artists':artistName}, { 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertInfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
+    // })
+    // .toArray();
+    // if (concertsList === null) throw `Error: function getConcertByArtistName() could not find concert with the artist: ${artistName}`;
+
+    // return concertsList;
+    let name = artistName.toLowerCase();
+
+    const artistsCollection = await artists();
+    const allArtist = await artistsCollection.find({}).toArray();
+    let artistsList = [];
+    for(index = 0; index < allArtist.length; index++){
+        let artist = allArtist[index];
+        if(artist.details.name.toLowerCase().includes(name)){
+            artistsList.push(artist.id);
+        };
+    };
+    
+    const concertsCollection = await concerts();
+    let concertsList = [];
+    for(index = 0; index < artistsList.length; index++){
+        let artist = artistsList[index];
+        let subConcertList = await concertsCollection.find({
+            $and: [ {'consertInfo.artists': artist},{ 'concertInfo.ticketPrice': { $lte: Number(dateAndPrice.toPrice) } }, { 'concertInfo.ticketPrice': { $gte: Number(dateAndPrice.fromPrice) }}, {'concertnfo.date': { $gte: dateAndPrice.fromDate }}, {'concertInfo.date': { $lte: dateAndPrice.toDate } } ]
+        })
+        .toArray();
+        concertsList.concat(subConcertList);
+    }
+    return concertsList
 }
 
 async function getConcertByAddress(address, dateAndPrice){
