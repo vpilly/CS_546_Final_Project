@@ -1,16 +1,17 @@
 <div class="nav">
-    <a class="login" href="/artists">artists</a>
+    <a class="login" href="/">home</a>
     <a class="login" href="/concerts">concerts</a>
+    <a class="login" href="/profile">profile</a>
     <a class="login" href="/logout">logout</a>
 </div>
 <main>
     <h1>{{artist.details.name}}</h1>
     {{#if likeFlag}}
-        <a href="/artists/details/{{artist._id}}/yes"><button class="like-button liked"></button></a>
+    <a href="/artists/details/{{artist._id}}/yes"><button class="like-button liked"></button></a>
     {{else}}
-        <a href="/artists/details/{{artist._id}}/no"><button class="like-button"></button></a>
+    <a href="/artists/details/{{artist._id}}/no"><button class="like-button"></button></a>
     {{/if}}
-    
+
     <br><br><br>
     <dl>
         <dt>Genre</dt><br>
@@ -20,18 +21,18 @@
     </dl>
     <h3>Comments</h3>
     {{#if artist.comments.length}}
-        <ul>
-            {{#each artist.comments}}
-            <li>{{this.time}}
-                <ul>
-                    <li>User ID: {{this.user}}</li>
-                    <li>Comment: {{this.comment}}</li>
-                </ul>
-            </li>
-            {{/each}}
-        </ul>
+    <ul>
+        {{#each artist.comments}}
+        <li>{{this.time}}
+            <ul>
+                <li>User ID: {{this.user}}</li>
+                <li>Comment: {{this.comment}}</li>
+            </ul>
+        </li>
+        {{/each}}
+    </ul>
     {{else}}
-        <p>Be the first one to leave a comment!</p>
+    <p>Be the first one to leave a comment!</p>
     {{/if}}
 
     <div id="respond">
@@ -41,7 +42,7 @@
         <form action="/artists/details/{{artist._id}}/comment" method="post" id="commentform">
 
             <label for="comment" class="required"></label>
-            <textarea name="comment" id="comment" rows="6" tabindex="4"  required="required"></textarea>
+            <textarea name="comment" id="comment" rows="6" tabindex="4" required="required"></textarea>
 
             <input name="submit" type="submit" value="Submit Comment" />
 
