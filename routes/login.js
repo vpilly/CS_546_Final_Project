@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
                 return;
             }
         }
-        res.render('login', {
+        res.render('login/login', {
             title: 'Login',
             errors: ["Invalid username or password"],
             hasErrors: true

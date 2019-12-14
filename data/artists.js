@@ -4,14 +4,16 @@ const users = mongoCollections.users;
 const userData = require('./users');
 const { ObjectId } = require('mongodb');
 
-async function addArtist(name, genre) {
-    if (arguments.length !== 2) throw `Error: function artists.addArtist() expected 2 parameters but instead received ${arguments.length}`;
+async function addArtist(name, genre, website) {
+    if (arguments.length !== 3) throw `Error: function artists.addArtist() expected 3 parameters but instead received ${arguments.length}`;
     if (typeof (name) !== 'string') throw `Error: function artists.addArtist() expected name to be a string but instead recieved a ${typeof (name)}`;
     if (typeof (genre) !== 'string') throw `Error: function artists.addArtist() expected genre to be a string but instead recieved a ${typeof (genre)}`;
+    if (typeof (website) !== 'string') throw `Error: function artists.addArtist() expected website to be a string but instead recieved a ${typeof (website)}`;
 
     details = {
         name: name,
         genre: genre,
+        website: website,
         concertsPerformed: [],
         concertsToPerform: []
     }
@@ -73,7 +75,7 @@ async function searchArtists(searchstring) {
         }
     }
 
-    return artists;
+    return artists.slice(0, 20);
 
 }
 
@@ -85,7 +87,7 @@ async function getArtistsByGenre(genre) {
     const artistList = await artistsCollection.find({ "details.genre": genre }).toArray();
     if (artistList === null) throw `Error: function artists.getArtistsByGenre() could not find artists with the genre: ${genre}`;
 
-    return artistList;
+    return artistList.slice(0, 20);
 }
 
 async function getArtistByConcertPerformed(concertId) {
