@@ -3,6 +3,7 @@ const loginRoutes = require("./login");
 const logoutRoutes = require("./logout");
 const artistRoutes = require("./artists");
 const concertRoutes = require("./concerts");
+const profileRoutes = require("./profile");
 const secMap = require('../security/table');
 
 const constructorMethod = app => {
