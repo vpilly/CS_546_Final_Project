@@ -10,6 +10,13 @@
                 <dt>Title</dt>
                 <dd>{{concert.concertInfo.title}}</dd>
                 <dt>Artists</dt>
+                {{!-- <dd>
+                    {{#each concert.concertInfo.artists}}
+                    <li>
+                        <a href="/artists/details/{{this.id}}">{{this.name}}</a>
+                    {{/each}}
+                    </li>
+                </dd> --}}
                 <dd>{{concert.concertInfo.artists}}</dd>
                 <dt>Date</dt>
                 <dd>{{concert.concertInfo.date}}</dd>

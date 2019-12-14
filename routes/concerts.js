@@ -94,9 +94,15 @@ router.post("/search", async(req, res) => {
 			let artistIdList = concertsFound[i].concertInfo.artists;
 			for(j = 0; j < artistIdList.length; j++){
 				let artist = await artistData.getArtistByID(artistIdList[j]);
-				artistIdList[j] = artist.details.name;
+				let newObj = {
+					name: artist.details.name,
+					id:artistIdList[j]
+				};
+				artistIdList[j] = newObj;
 			};
+			console.log(artistIdList);
 		};
+
 		res.render("concerts/concertSearchResults", { title: "Concerts Found", concertsList: concertsFound, searchContent: body.searchContent });
 	} catch (e) {
 		res.status(400).render('concerts/error', { title: "400 Error" , error: e });
