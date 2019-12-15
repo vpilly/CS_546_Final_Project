@@ -3,3 +3,66 @@
     <a class="login" href="/concerts">concerts</a>
     <a class="login" href="/logout">logout</a>
 </div>
+<h1> Profile </h1>
+<h2>{{name}}</h2>
+{{#if diffUser}}
+{{#if isFriend}}
+<form action="/profile/{{id}}/unfriend" method="POST" id="unfriendForm">
+    <button type="submit" class="button">Unfriend</button>
+</form>
+{{else}}
+<form action="/profile/{{id}}/friend" method="POST" id="friendForm">
+    <button type="submit" class="button">Friend</button>
+</form>
+{{/if}}
+{{/if}}
+<main>
+    <h3>Friends</h3>
+    {{#if friends.length}}
+    <ul>
+        {{#each friends}}
+        <li><a href="/profile/{{this.id}}">{{this.name}}</a></li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>This user has no friends</p>
+    {{/if}}
+    <br>
+
+    <h3>Favorite Artists</h3>
+    {{#if artists.length}}
+    <ul>
+        {{#each artists}}
+        <li><a href="/artists/details/{{this.id}}">{{this.name}}</a></li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p class="error">This user has no favorite artists</p>
+    {{/if}}
+    <br>
+
+    <h3>Concerts Attended</h3>
+    {{#if concertsA.length}}
+    <ul>
+        {{#each concertsA}}
+        <li><a href="/concerts/details/{{this.id}}">{{this.name}}</a></li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>This user has not attended any concerts</p>
+    {{/if}}
+    <br>
+
+    <h3>Upcoming Concerts</h3>
+    {{#if concertsT.length}}
+    <ul>
+        {{#each concertsT}}
+        <li><a href="/concerts/details/{{this.id}}">{{this.name}}</a></li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>This user will not be attending any upcoming concerts</p>
+    {{/if}}
+    <br>
+
+</main>

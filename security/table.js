@@ -16,7 +16,6 @@ async function generateHexString(length) {
 
 async function newCookie(key) {
     if (arguments.length !== 1) throw 'Error';
-    console.log(typeof key);
     if (typeof (key) !== 'string') throw 'Error';
 
     const secret = await generateHexString(128);

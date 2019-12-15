@@ -139,7 +139,7 @@ async function addFavArtist(userId, artistId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $addToSet: { "profile.favoriteArtists": artistId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function addFavArtist() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
 }
 
 async function addConcAttend(userId, concertId) {
@@ -157,7 +157,7 @@ async function addConcAttend(userId, concertId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $addToSet: { "profile.concertsAttended": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function addConcAttend() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
 }
 
 async function addConcToAttend(userId, concertId) {
@@ -175,7 +175,7 @@ async function addConcToAttend(userId, concertId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $addToSet: { "profile.concertsToAttend": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function addConcToAttend() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
 }
 
 async function removeFriend(userId, friendId) {
@@ -193,7 +193,7 @@ async function removeFriend(userId, friendId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $pull: { "profile.friends": friendId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function removeFriend() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
 }
 
 async function removeFavArtist(userId, artistId) {
@@ -211,7 +211,7 @@ async function removeFavArtist(userId, artistId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $pull: { "profile.favoriteArtists": artistId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function removeFavArtist() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
 }
 
 async function removeConcAttend(userId, concertId) {
@@ -229,7 +229,7 @@ async function removeConcAttend(userId, concertId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $pull: { "profile.concertsAttended": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function removeConcAttend() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
 }
 
 async function removeConcToAttend(userId, concertId) {
@@ -247,7 +247,23 @@ async function removeConcToAttend(userId, concertId) {
     const updateInfo = await usersCollection.updateOne({ _id: objId }, { $pull: { "profile.concertsToAttend": concertId } });
     if (updateInfo.modifiedCount === 0) throw `Error: function removeConcToAttend() could not succesfully update name of user with the userId: ${userId}`;
 
-    return await usersCollection.findOne({ _id: objId });;
+    return await usersCollection.findOne({ _id: objId });
+}
+
+async function hasFriend(userId, friendId) {
+    if (arguments.length !== 2) throw `Error: function hasFriend() expected 2 parameters but instead received ${arguments.length}`;
+    if (typeof (userId) !== 'string') throw `Error: function hasFriend() expected userId to be a string but instead recieved a ${typeof (userId)}`;
+    if (typeof (friendId) !== 'string') throw `Error: function hasFriend() expected friendId to be a string but instead recieved a ${typeof (friendId)}`;
+
+    const objId = ObjectId.createFromHexString(userId);
+    if (!ObjectId.isValid(objId)) throw `Error: function hasFriend() received an invalid userId: ${userId}`;
+    const usersCollection = await users();
+
+    const user = await usersCollection.findOne({ _id: objId });
+    if (user === null) throw `Error: function addFriend() could not find a user with the userId: ${userId}`;
+
+    // console.log(user.profile);
+    return user.profile.friends.includes(friendId);
 }
 
 module.exports = {
@@ -264,5 +280,6 @@ module.exports = {
     removeFriend,
     removeFavArtist,
     removeConcAttend,
-    removeConcToAttend
+    removeConcToAttend,
+    hasFriend
 };

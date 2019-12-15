@@ -47,6 +47,7 @@ const constructorMethod = app => {
     app.use("/logout", logoutRoutes);
     app.use("/artists", artistRoutes);
     app.use("/concerts", concertRoutes);
+    app.use("/profile", profileRoutes);
 
     app.get("/", (req, res) => {
         res.render('home', { title: 'Home', logged: true });
