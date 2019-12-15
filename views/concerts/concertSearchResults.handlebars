@@ -7,6 +7,7 @@
 <h1>{{title}}</h1>
 <h2>{{searchContent}}</h2>
 <main class="concerts">
+    <div id="concertResultWrapper">
     {{#unless concertsList.length}}
     <p class="not-found">We're sorry, but no results were found for "{{searchContent}}".</p>
     {{/unless}}
@@ -19,5 +20,6 @@
             {{/each}}
         </li>
     </ul>
+    </div>
 </main>
 <a href="/concerts" id="make_another_search">Make another search</a>
