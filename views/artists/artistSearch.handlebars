@@ -18,12 +18,13 @@
             <button type="submit">Search</button><br>
         </form>
         <br>
-        {{#if hasErrors}}
-        <p class="error">
-            {{#each errors}}
-            {{this}}
+        {{#if recommendations.length}}
+        <h3>Recommended Artists:</h3>
+        <ul>
+            {{#each recommendations}}
+                <li><a href="/artists/details/{{this._id}}">{{this.details.name}}</a></li>
             {{/each}}
-        </p>
+        </ul>
         {{/if}}
     </div>
 </main>

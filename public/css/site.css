@@ -32,6 +32,10 @@ h1 {
   -webkit-text-stroke: 1px black;
 }
 
+h3 {
+  -webkit-text-stroke: 1px black;
+}
+
 p {
   font-size: 1rem;
   line-height: 2;

@@ -4,7 +4,29 @@ const artistData = require('../data/artists');
 const userData = require('../data/users');
 
 router.get('/', async (req, res) => {
-    res.render("artists/artistSearch", { title: "Artists" });
+    const email = req.session.auth.email;
+    const user = await userData.getUserByEmail(email);
+    const user_id = user._id.toHexString();
+    const likes = user.profile.favoriteArtists;
+    let likeDict = {};
+
+    for(let i = 0; i < likes.length; i++) {
+        let artist = await artistData.getArtistByID(likes[i]);
+        let genre = artist.details.genre;
+
+        if(likeDict[genre]) {
+            likeDict[genre] += 1;
+        } else {
+            likeDict[genre] = 1;
+        }
+    }
+
+    var maxKey = Object.keys(likeDict).reduce(function(a, b){ return likeDict[a] > likeDict[b] ? a : b });
+    
+    let recommendedArtists = await artistData.getArtistsByGenre(maxKey);
+    let recommendations = recommendedArtists.slice(0, 2);
+
+    res.render("artists/artistSearch", { title: "Artists", recommendations: recommendations });
 });
 
 router.get('/details/:id/:liked', async (req, res) => {
