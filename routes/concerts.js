@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const concertData = require('../data/concerts');
 const artistData = require('../data/artists');
+const userData = require('../data/users');
 
 router.get("/", async(req, res) => {
 	try {
@@ -76,7 +77,20 @@ router.get('/details/:id', async (req, res) => {
 			};
 			concert.concertInfo.artists[j] = newObj;
 		};	
-        res.render('concerts/detailedConcert', { title: "Concert Details", concert: concert });
+
+
+		const email = req.session.auth.email;
+        const user = await userData.getUserByEmail(email);
+        const concert_id = concert._id.toHexString();
+
+        const likes = user.profile.concertsToAttend;
+        let likeFlag = false;
+        for(let i = 0; i < likes.length; i++) {
+            if(likes[i] == concert_id) {
+                likeFlag = true;
+            }
+        }
+        res.render('concerts/detailedConcert', { title: "Concert Details", concert: concert,likeFlag: likeFlag });
     } catch (e) {
         res.status(500).render('concerts/error', { title: "500 Error" , error: e });
 		return;
@@ -140,6 +154,30 @@ router.get('/venue/:venue', async (req, res) => {
         res.render('concerts/venueResults', { title: "Concerts", concerts: concerts, venue: venue });
     } catch (e) {
         res.status(400).render('concerts/error', { title: "400 Error" , error: e });
+		return;
+    }
+});
+
+router.get('/details/:id/:liked', async (req, res) => {
+    try {
+        const email = req.session.auth.email;
+        const user = await userData.getUserByEmail(email);
+        const user_id = user._id.toHexString();
+        const concert = await concertData.getConcertByID(req.params.id);
+        const concert_id = concert._id.toHexString();
+
+        let likeFlag = req.params.liked;
+        
+        if(likeFlag == "yes") {
+            await userData.removeConcToAttend(user_id, concert_id);
+        } else {
+            await userData.addConcToAttend(user_id, concert_id);
+        }
+
+        res.redirect('/concerts/details/' + req.params.id);
+    } catch (e) {
+        res
+		res.status(500).render('concerts/error', { title: "500 Error" , error: e });
 		return;
     }
 });

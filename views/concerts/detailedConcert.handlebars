@@ -7,6 +7,8 @@
 <h1>{{title}}</h1>
     <h2>{{concert.title}}</h2>
         <main class="concert">
+             <h1>{{artist.details.name}}</h1>
+            <br><br><br>
             <dl id="concertWrapper">
                 <dt>Title</dt>
                 <dd>{{concert.concertInfo.title}}</dd>
@@ -42,4 +44,9 @@
                 <dt>Ticket Price</dt>
                 <dd>{{concert.concertInfo.ticketPrice}}</dd>
             </dl> 
+            {{#if likeFlag}}
+            <a href="/concerts/details/{{concert._id}}/yes"><button class="like-button liked"></button></a>
+            {{else}}
+            <a href="/concerts/details/{{concert._id}}/no"><button class="like-button"></button></a>
+            {{/if}}
         </main>
