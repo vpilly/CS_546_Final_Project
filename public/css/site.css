@@ -174,7 +174,7 @@ li a {
   background: white;
 }
 
-#artistSearchWrapper {
+#artistSearchWrapper,#concertSearchWrapper {
   position: absolute;
   top: 20%;
   left: 40%;
@@ -184,7 +184,7 @@ li a {
   height: 30%;
 }
 
-#artistResultWrapper {
+#artistResultWrapper,#concertResultWrapper {
   position: absolute;
   top: 5%;
   left: 35%;
