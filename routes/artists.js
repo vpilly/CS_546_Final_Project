@@ -11,25 +11,25 @@ router.get('/', async (req, res) => {
     let recommendations = [];
     let choices = [];
 
-    if(likes.length){
-        for(let i = 0; i < likes.length; i++) {
+    if (likes.length) {
+        for (let i = 0; i < likes.length; i++) {
             let artist = await artistData.getArtistByID(likes[i]);
             let genre = artist.details.genre;
 
-            if(likeDict[genre]) {
+            if (likeDict[genre]) {
                 likeDict[genre] += 1;
             } else {
                 likeDict[genre] = 1;
             }
         }
 
-        var maxKey = Object.keys(likeDict).reduce(function(a, b){ return likeDict[a] >= likeDict[b] ? a : b });
-        
+        var maxKey = Object.keys(likeDict).reduce(function (a, b) { return likeDict[a] >= likeDict[b] ? a : b });
+
         let recommendedArtists = await artistData.getArtistsByGenre(maxKey);
 
-        for(let j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
             let choice = Math.floor(Math.random() * recommendedArtists.length);
-            while(choices.includes(choice)) {
+            while (choices.includes(choice)) {
                 choice = Math.floor(Math.random() * recommendedArtists.length);
             }
             let rand = recommendedArtists[choice];
@@ -51,8 +51,8 @@ router.get('/details/:id/:liked', async (req, res) => {
         const artist_id = artist._id.toHexString();
 
         let likeFlag = req.params.liked;
-        
-        if(likeFlag == "yes") {
+
+        if (likeFlag == "yes") {
             await userData.removeFavArtist(user_id, artist_id);
         } else {
             await userData.addFavArtist(user_id, artist_id);
@@ -77,8 +77,8 @@ router.get('/details/:id', async (req, res) => {
 
         const likes = user.profile.favoriteArtists;
         let likeFlag = false;
-        for(let i = 0; i < likes.length; i++) {
-            if(likes[i] == artist_id) {
+        for (let i = 0; i < likes.length; i++) {
+            if (likes[i] == artist_id) {
                 likeFlag = true;
             }
         }

@@ -22,13 +22,13 @@
 
     <h3>Upcoming Concerts</h3>
     {{#if artist.details.concertsToPerform.length}}
-        <ul>
-            {{#each artist.details.concertsToPerform}}
-            <li><a href="/concerts/details/{{this}}">Concert Link</a></li>
-            {{/each}}
-        </ul>
+    <ul>
+        {{#each artist.details.concertsToPerform}}
+        <li><a href="/concerts/details/{{this}}">Concert Link</a></li>
+        {{/each}}
+    </ul>
     {{else}}
-        <p>No future concerts scheduled yet!</p>
+    <p>No future concerts scheduled yet!</p>
     {{/if}}
 
 
@@ -36,11 +36,11 @@
     {{#if artist.comments.length}}
     <ul>
         {{#each artist.comments}}
-        <li>{{this.time}}
-            <ul>
-                <li>User ID: {{this.user}}</li>
-                <li>Comment: {{this.comment}}</li>
-            </ul>
+        <li>
+            <p>{{this.time}}</p>
+            <p>User:</p>
+            <a href="/profile/{{this.user}}">{{this.user}}</a>
+            <p>Comment: {{this.comment}}</p>
         </li>
         {{/each}}
     </ul>
