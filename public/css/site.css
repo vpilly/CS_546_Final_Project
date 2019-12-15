@@ -23,7 +23,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #ef562f;
+  color: #c93c00;
   margin-bottom: 5px;
 }
 
@@ -43,8 +43,6 @@ p {
 
 a {
  font-size: 1rem;
- border-bottom: 3px solid black;
- border-top: 3px solid black;
 }
 
 li a {
@@ -83,17 +81,6 @@ li a {
   color: black;
 }
 
-.button {
-  background-color: sandybrown; /* Green */
-  border: 3px 3px 3px 3px black;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: underline;
-  display: inline-block;
-  font-size: 12pt;
-}
-
 #wrapper {
   position: absolute;
   top: 30%;
@@ -104,13 +91,23 @@ li a {
   height: 30%;
 }
 
+#concertWrapper {
+  background-color: white;
+}
+
+#concertWrapper dt {
+  background-color: #f2f2e8;
+  border: 1px black;
+}
+
+
 .main {
   width: 60%;
   display: inline-block;
 }
 
 #title {
-  color: #ef562f;
+  color: #c93c00;
   font-size: 1.8rem;
 }
 
