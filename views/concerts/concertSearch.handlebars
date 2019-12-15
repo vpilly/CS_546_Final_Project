@@ -5,6 +5,7 @@
     <a class="login" href="/logout">logout</a>
 </div>
 <main>
+    <div id="artistSearchWrapper">
     <h1>{{title}}</h1>
     <p>Welcome! Here is a concert search page! You can look up explore concerts by any means! </p>
     <form action="/concerts/search" method="POST">
@@ -25,7 +26,8 @@
         <input type="number" id="toPrice" name="toPrice" min=0 value=10000><br>
         <button type="submit">Search</button>
     </form>
-    <h2>Recommend Concert</h2>
+    </div>
+    <h2>Recommend Concerts</h2>
     <ul>
         {{#each recommendConcerts}}
         <li>
@@ -35,19 +37,4 @@
             {{/each}}
         </li>
     </ul>
-
-    {{!-- <h2>Creat a new con(for test,delete this part later)</h2>
-        <form action = "/concerts" method = "POST">
-            title<input type="text" name="title"><br>
-            artists<input type="text" name="artists[]"><input type="text" name="artists[]"><br>
-            date<input type="text" name="date"><br>
-            time<input type="text" name="time"><br>
-            address<input type="text" name="address"><br>
-            zipcode<input type="text" name="zipcode"><br>
-            venue<input type="text" name="venue"><br>
-            genre<input type="text" name="genre[]"><input type="text" name="genre[]"><br>
-            description<input type="text" name="description"><br>
-            ticketPrice<input type="number" name="ticketPrice"><br>
-            <button type ="submit">Creat</button>
-        </form> --}}
 </main>
