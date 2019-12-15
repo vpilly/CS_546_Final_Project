@@ -1,6 +1,4 @@
 (function ($) {
-    // Let's start writing AJAX calls!
-
     var passField = $("#password");
     var emailField = $("#email");
     var button = $('#verify');
